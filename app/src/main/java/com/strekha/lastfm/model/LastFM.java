@@ -2,6 +2,7 @@ package com.strekha.lastfm.model;
 
 import com.strekha.lastfm.model.content.info.Artist;
 import com.strekha.lastfm.model.content.info.ArtistInfo;
+import com.strekha.lastfm.model.top.TopArtists;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class LastFM implements LastFMApi {
         api = retrofit.create(LastFMApi.class);
     }
 
-    public Observable<List<Artist>> getTopArtists() {
+    public Observable<TopArtists> getTopArtists() {
         return api.getTopArtists();
     }
 
