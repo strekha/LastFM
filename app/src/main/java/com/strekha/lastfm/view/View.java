@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface View {
     void setData(List<Artist> list);
+    void makeToast(String message);
 }

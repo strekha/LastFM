@@ -1,8 +1,7 @@
 package com.strekha.lastfm.presenter;
 
-import android.util.Log;
-
 import com.strekha.lastfm.model.LastFM;
+import com.strekha.lastfm.model.LastFMApi;
 import com.strekha.lastfm.model.top.Artist;
 import com.strekha.lastfm.model.top.ArtistComparator;
 import com.strekha.lastfm.model.top.TopArtists;
@@ -20,7 +19,7 @@ public class ListActivityPresenter implements ListPresenter {
 
     private View view;
     private List<Artist> artists;
-    private LastFM lastFM;
+    private LastFMApi lastFM;
 
 
     @Override
@@ -38,7 +37,7 @@ public class ListActivityPresenter implements ListPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("myLog", e.getMessage());
+                        view.makeToast(e.getMessage());
                     }
 
                     @Override

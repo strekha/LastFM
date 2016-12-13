@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.strekha.lastfm.R;
@@ -38,5 +39,10 @@ public class ListActivity extends AppCompatActivity implements View {
     public void setData(List<Artist> list) {
         adapter = new TopArtistAdapter(list);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void makeToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
