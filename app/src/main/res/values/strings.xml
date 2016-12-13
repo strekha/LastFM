@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lastfm</string>
+    <string name="playcount">Прослушиваний:</string>
+    <string name="listeners">Слушателей:</string>
+</resources>
