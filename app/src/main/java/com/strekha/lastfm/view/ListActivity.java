@@ -4,13 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.strekha.lastfm.model.top.Artist;
-import com.strekha.lastfm.model.top.TopArtists;
 import com.strekha.lastfm.presenter.ListActivityPresenter;
 import com.strekha.lastfm.presenter.ListPresenter;
 
@@ -18,8 +18,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements View {
 
-    private ListPresenter presenter = new ListActivityPresenter();
-    private RecyclerView recyclerView;
+    private ListPresenter presenter = new ListActivityPresenter(this);
     private TopArtistAdapter adapter;
 
     @Override
@@ -27,18 +26,20 @@ public class ListActivity extends AppCompatActivity implements View {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_top_list);
+        Log.d("myLog", "asdf");
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycleView);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TopArtistAdapter();
+        adapter.setOnItemClickListener(artist -> Log.d("myLog", artist));
 
-        presenter.create(this);
+        presenter.getData();
     }
 
     @Override
     public void setData(List<Artist> list) {
-        adapter = new TopArtistAdapter(list);
-        recyclerView.setAdapter(adapter);
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
