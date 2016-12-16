@@ -1,5 +1,7 @@
 package com.strekha.lastfm.presenter;
 
+import android.util.Log;
+
 import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.model.LastFMApi;
 import com.strekha.lastfm.model.top.Artist;
@@ -21,11 +23,9 @@ public class ListActivityPresenter implements ListPresenter {
     private List<Artist> artists;
     private LastFMApi lastFM;
 
-
     @Override
-    public void create(final View view) {
-        this.view = view;
-        lastFM = new LastFM();
+    public void getData() {
+        if (lastFM == null) lastFM = new LastFM();
         Observable<TopArtists> artistInfo = lastFM.getTopArtists();
         artistInfo.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,7 +50,7 @@ public class ListActivityPresenter implements ListPresenter {
     }
 
     @Override
-    public int onItemClickListener() {
-        return 0;
+    public void bindView(View view) {
+        this.view = view;
     }
 }

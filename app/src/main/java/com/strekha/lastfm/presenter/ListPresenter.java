@@ -4,6 +4,7 @@ import com.strekha.lastfm.view.View;
 
 public interface ListPresenter {
 
-    void create(View view);
-    int onItemClickListener();
+    void getData();
+    void bindView(View view);
+
 }
