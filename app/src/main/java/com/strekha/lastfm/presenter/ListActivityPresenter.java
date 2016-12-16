@@ -1,13 +1,11 @@
 package com.strekha.lastfm.presenter;
 
-import android.util.Log;
-
 import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.model.LastFMApi;
 import com.strekha.lastfm.model.top.Artist;
 import com.strekha.lastfm.model.top.ArtistComparator;
 import com.strekha.lastfm.model.top.TopArtists;
-import com.strekha.lastfm.view.View;
+import com.strekha.lastfm.view.ListView;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +17,7 @@ import rx.schedulers.Schedulers;
 
 public class ListActivityPresenter implements ListPresenter {
 
-    private View view;
+    private ListView view;
     private List<Artist> artists;
     private LastFMApi lastFM;
 
@@ -50,7 +48,7 @@ public class ListActivityPresenter implements ListPresenter {
     }
 
     @Override
-    public void bindView(View view) {
+    public void bindView(ListView view) {
         this.view = view;
     }
 }

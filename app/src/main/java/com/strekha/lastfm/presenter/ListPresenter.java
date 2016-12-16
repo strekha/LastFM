@@ -1,10 +1,11 @@
 package com.strekha.lastfm.presenter;
 
-import com.strekha.lastfm.view.View;
+import com.strekha.lastfm.view.InfoView;
+import com.strekha.lastfm.view.ListView;
 
 public interface ListPresenter {
 
     void getData();
-    void bindView(View view);
+    void bindView(ListView view);
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by HP on 13.12.2016.
  */
 
-public interface View {
+public interface ListView {
     void setData(List<Artist> list);
     void makeToast(String message);
 }
