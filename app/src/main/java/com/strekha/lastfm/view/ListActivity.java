@@ -1,5 +1,6 @@
 package com.strekha.lastfm.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,15 +11,15 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.model.top.Artist;
+import com.strekha.lastfm.model.content.top.Artist;
 import com.strekha.lastfm.presenter.ListActivityPresenter;
 import com.strekha.lastfm.presenter.ListPresenter;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements View {
+public class ListActivity extends AppCompatActivity implements ListView {
 
-    private ListPresenter presenter = new ListActivityPresenter(this);
+    private ListPresenter listPresenter;
     private TopArtistAdapter adapter;
 
     @Override
@@ -28,12 +29,22 @@ public class ListActivity extends AppCompatActivity implements View {
         setContentView(R.layout.activity_top_list);
         Log.d("myLog", "asdf");
 
+        listPresenter = new ListActivityPresenter();
+        listPresenter.bindView(this);
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TopArtistAdapter();
-        adapter.setOnItemClickListener(artist -> Log.d("myLog", artist));
+        adapter.setOnItemClickListener(artist -> startInfoActivity(artist));
+        recyclerView.setAdapter(adapter);
 
-        presenter.getData();
+        listPresenter.getData();
+    }
+
+    private void startInfoActivity(String artist) {
+        Intent intent = new Intent(this, ArtistInfoActivity.class);
+        intent.putExtra("title", artist);
+        startActivity(intent);
     }
 
     @Override

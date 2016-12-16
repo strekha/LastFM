@@ -12,12 +12,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.0_c8f7dec673363f982d1421e2326705998149fb2a\classes.dex" />
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_5d4b4517a210a68f51b294298699df78deccad23\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -30,21 +30,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.thoughtbot\expandablerecyclerview\1.3\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_96d699c1a272b83eb76c8d78c41afa1134ecb8eb\classes.dex" />
+        sha1="4f97957ca13c4eda0e0ec407224f3d0d8d33ce09">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.thoughtbot-expandablerecyclerview-1.3_347532bd45a8a04657941505ddced9b1995a41ea\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_5cfe63dd5ac0e8d87fbdc3afcb29b84166d17f15\classes.dex" />
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_c675e185111f742aba13055fbd5b16ea83eaed68\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -57,12 +57,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_5c2e0edd5a552cfb22462fb91aec6b785a881b80\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\HP\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.1.0\2de7cd8b95b7021b1d597f049bcb422055119f2c\retrofit-2.1.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="2de7cd8b95b7021b1d597f049bcb422055119f2c">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.1.0_c3e2ab6a13538fb48f2cb073048014e14a5c76f2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_edb787c4fbe3a8cacdefaa429d10f3216a5efcf5\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -102,30 +120,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_9c349a95863d60fe5a19d94e3ad43c13634890b4\classes.dex" />
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_566d3844fea4327bee8fe262604baae571e863a0\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.0_50eaa5e5e4c17609ba5eef7bb54730f784946954\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.0_45bc043882b4029c68250bf5a49b8f49f2db1126\classes.dex" />
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_a51d45871074621a43f7a3e191740ca80b87bb2e\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -133,44 +142,35 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="8897682a829dc31c07da04ab8cc648cf64dd7d16">
+        sha1="5df34961f57f777504a8109a759c528d8ad317b1">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9f4649d807f4b628fc52cc114e97b98515bdb12d\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.0_987e05d72e70c0eee1bd54c793ef9a90267a6782\classes.dex" />
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_921bd3c9fa24ba1872bc01e093118a254ead6a94\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.0_c0971302249acd69f5321b3cbf44f03a88f52cec\classes.dex" />
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_e0968745112f0c85e729c12218ded6fdc0c1d992\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jar="C:\Users\HP\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_d98336cb14df8b23336b7c9b95c991d93a539f72\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_d4193b5e4f3186d0bfee0b08697ead3d109e676d\classes.dex" />
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_c1b94ba49c32c59eb77c35c0b2f261c564b86986\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -180,6 +180,15 @@
         revision="24.0.2"
         sha1="8795af3e130206443f2d5ed45f1b26067aff70dc">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-imagepipeline-0.14.1_ebfffdc1daa15a9011981ce293f8688bc1308a36\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_06689c567d24f9317edacb14cf437eace1f8e6a2\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -201,6 +210,33 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_d0b67cf12e2d0350fb1d3574b0e1a5ed6948497e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_34442a7368b18c32e76378dd5f688edc4efaaed9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_5d97a897d3907cbf7769aebbee63c9e4597759ed\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\HP\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.7\751f548c85fa49f330cecbb1875893f971b33c4e\gson-2.7.jar"
         jumboMode="true"
         optimize="true"
@@ -210,39 +246,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_c2cefce1398a2f8348e9ac3aa8521740cfe46936\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\android\Lastfm\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="4dc9c0e33d2a905ae3e38334d107ddc75c185a28">
+        sha1="7560bede5e805c0979b4f10d86eb6294be784ca6">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_644d6ffea26f96debc758687905cffb4ac0e8ba5\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="96e33a7aaee00ab64270e2a9887b8f9ef32c8b73">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-24.2.0_3b7e10be0a6b0a33b611b92c4622fc2babf5dab2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.0_e5d484e3fdc9345394a1d54283cb2368b707ad4b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\HP\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_e6e077a6fb0c42b9272cd602d191c2fa7cb8fb20\classes.dex" />
+        sha1="1108575c7dc7b7f5b378b3290ac90de81a9b8830">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-25.0.1_c539e1477c0567cc0b588e78a47bf758f3fae9bc\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -255,15 +282,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.0_0dd254f126e7ad8f16b04ca306c752a27218720f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -273,21 +291,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_1fcfc2e2575d991ccc17a027ef9b26c75525d018\classes.dex" />
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_9f712f60b1a473e3b560470979f2bdab5eb9dfcc\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\jars\classes.jar"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.0_70c19de643fcb16cb66954df3260022395fcf589\classes.dex" />
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_f10039dea06e3883d7a931bbb1491b930f3673c9\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -297,15 +315,6 @@
         revision="24.0.2"
         sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-tasks-1.4.0_12156799a0b8cdc597a93a7624642d04d335bebc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.0_7cc7deaf68b85e6e7ddd51fd788f96e38a5bb635\classes.dex" />
     </item>
 
 </items>
