@@ -1,6 +1,6 @@
 package com.strekha.lastfm.view;
 
-import com.strekha.lastfm.model.top.Artist;
+import com.strekha.lastfm.model.content.top.Artist;
 
 import java.util.List;
 

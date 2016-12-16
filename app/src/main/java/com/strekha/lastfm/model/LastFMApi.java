@@ -1,10 +1,7 @@
 package com.strekha.lastfm.model;
 
-import com.strekha.lastfm.model.content.info.Artist;
 import com.strekha.lastfm.model.content.info.ArtistInfo;
-import com.strekha.lastfm.model.top.TopArtists;
-
-import java.util.List;
+import com.strekha.lastfm.model.content.top.TopArtists;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

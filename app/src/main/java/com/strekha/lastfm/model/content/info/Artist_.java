@@ -1,11 +1,14 @@
 
 package com.strekha.lastfm.model.content.info;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Artist_ {
+public class Artist_ implements Parcelable {
 
     @SerializedName("name")
     @Expose
@@ -71,4 +74,13 @@ public class Artist_ {
         this.image = image;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
 }

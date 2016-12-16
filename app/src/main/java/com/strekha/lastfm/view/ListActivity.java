@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.model.top.Artist;
+import com.strekha.lastfm.model.content.top.Artist;
 import com.strekha.lastfm.presenter.ListActivityPresenter;
 import com.strekha.lastfm.presenter.ListPresenter;
 

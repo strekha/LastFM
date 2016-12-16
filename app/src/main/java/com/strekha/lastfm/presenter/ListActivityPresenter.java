@@ -2,9 +2,9 @@ package com.strekha.lastfm.presenter;
 
 import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.model.LastFMApi;
-import com.strekha.lastfm.model.top.Artist;
-import com.strekha.lastfm.model.top.ArtistComparator;
-import com.strekha.lastfm.model.top.TopArtists;
+import com.strekha.lastfm.model.content.top.Artist;
+import com.strekha.lastfm.model.content.top.ArtistComparator;
+import com.strekha.lastfm.model.content.top.TopArtists;
 import com.strekha.lastfm.view.ListView;
 
 import java.util.Collections;
