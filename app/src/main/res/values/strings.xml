@@ -2,4 +2,5 @@
     <string name="app_name">Lastfm</string>
     <string name="playcount">Прослушиваний:</string>
     <string name="listeners">Слушателей:</string>
+    <string name="similar">Похожие исполнители</string>
 </resources>

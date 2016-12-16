@@ -49,7 +49,8 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
         bio.setText(artistInfo.getArtist().getBio().getContent());
 
         ExpandableAdapter adapter = new ExpandableAdapter(Arrays.asList(
-                new SimilarGroup("Similar",artistInfo.getArtist().getSimilar().getArtist())));
+                new SimilarGroup(getResources().getString(R.string.similar),
+                        artistInfo.getArtist().getSimilar().getArtist())));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
