@@ -24,6 +24,7 @@ public class ListActivity extends AppCompatActivity implements ListView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_top_list);
