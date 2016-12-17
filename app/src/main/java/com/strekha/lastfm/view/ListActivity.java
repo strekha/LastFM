@@ -1,6 +1,7 @@
 package com.strekha.lastfm.view;
 
 import android.content.Intent;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ public class ListActivity extends AppCompatActivity implements ListView {
 
     private ListPresenter listPresenter;
     private TopArtistAdapter adapter;
+    private ContentLoadingProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,8 @@ public class ListActivity extends AppCompatActivity implements ListView {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_top_list);
-        Log.d("myLog", "asdf");
+
+        progressBar = (ContentLoadingProgressBar) findViewById(R.id.progress);
 
         listPresenter = new ListActivityPresenter();
         listPresenter.bindView(this);
@@ -52,10 +55,12 @@ public class ListActivity extends AppCompatActivity implements ListView {
     public void setData(List<Artist> list) {
         adapter.setList(list);
         adapter.notifyDataSetChanged();
+        progressBar.hide();
     }
 
     @Override
     public void makeToast(String message) {
+        Log.e("myLog", message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
