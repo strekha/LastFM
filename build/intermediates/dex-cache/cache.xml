@@ -232,7 +232,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="c18b01a2bfe60d3c7404c72b30eaa861e14307d0">
+        sha1="aadadd54b6877574884c24133bfbc88639b4dc27">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_644d6ffea26f96debc758687905cffb4ac0e8ba5\classes.dex" />
     </item>
     <item
@@ -268,7 +268,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="176a594433cd4de04b7a56f581bd53087056bbcd">
+        sha1="9611c6f199e89307f22ba98947cc7c826a0abcc8">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9f4649d807f4b628fc52cc114e97b98515bdb12d\classes.dex" />
     </item>
     <item
@@ -282,21 +282,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_9f712f60b1a473e3b560470979f2bdab5eb9dfcc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.reactivex-rxandroid-1.2.1_54679d493540163c0f289dd026e28572dc7d1459\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\android\Lastfm\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_9f712f60b1a473e3b560470979f2bdab5eb9dfcc\classes.dex" />
     </item>
     <item
         is-multidex="true"

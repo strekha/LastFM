@@ -20,4 +20,6 @@ public class SimilarArtistViewHolder extends ChildViewHolder {
     public void onBind(Artist_ artist) {
         title.setText(artist.getName());
     }
+
+
 }
