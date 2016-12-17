@@ -7,6 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public class LastFM implements LastFMApi {
@@ -28,7 +29,7 @@ public class LastFM implements LastFMApi {
     }
 
     @Override
-    public Observable<ArtistInfo> getArtistInfo(@Path("artist") String artist) {
-        return api.getArtistInfo(artist);
+    public Observable<ArtistInfo> getArtistInfo(@Query("artist") String artist, @Query("lang") String lang) {
+        return api.getArtistInfo(artist, lang);
     }
 }

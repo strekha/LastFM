@@ -22,7 +22,6 @@ public class ListActivity extends AppCompatActivity implements ListView {
 
     private ListPresenter listPresenter;
     private TopArtistAdapter adapter;
-    private ContentLoadingProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +29,6 @@ public class ListActivity extends AppCompatActivity implements ListView {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_top_list);
-
-        progressBar = (ContentLoadingProgressBar) findViewById(R.id.progress);
 
         listPresenter = new ListActivityPresenter();
         listPresenter.bindView(this);
@@ -55,7 +52,7 @@ public class ListActivity extends AppCompatActivity implements ListView {
     public void setData(List<Artist> list) {
         adapter.setList(list);
         adapter.notifyDataSetChanged();
-        progressBar.hide();
+        ((ContentLoadingProgressBar) findViewById(R.id.progress)).hide();
     }
 
     @Override

@@ -3,4 +3,5 @@
     <string name="playcount">Прослушиваний:</string>
     <string name="listeners">Слушателей:</string>
     <string name="similar">Похожие исполнители</string>
+    <string name="lang">ru</string>
 </resources>

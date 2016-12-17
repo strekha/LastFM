@@ -15,9 +15,9 @@ public class ArtistInfoPresenter implements InfoPresenter {
     private InfoView view;
 
     @Override
-    public void getData(String title) {
+    public void getData(String title, String lang) {
         if (lastFM == null) lastFM = new LastFM();
-        Observable<ArtistInfo> artistInfo = lastFM.getArtistInfo(title);
+        Observable<ArtistInfo> artistInfo = lastFM.getArtistInfo(title, lang);
         artistInfo.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(information -> {
