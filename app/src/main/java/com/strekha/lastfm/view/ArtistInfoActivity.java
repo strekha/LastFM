@@ -3,6 +3,7 @@ package com.strekha.lastfm.view;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -51,7 +52,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
 
         listeners.setText(artistInfo.getArtist().getStats().getListeners());
         playcount.setText(artistInfo.getArtist().getStats().getPlaycount());
-        image.setImageURI(artistInfo.getArtist().getImage().get(3).getText());
+        image.setImageURI(artistInfo.getArtist().getImage().get(4).getText());
         bio.setText(artistInfo.getArtist().getBio().getContent());
 
         ExpandableAdapter adapter = new ExpandableAdapter(Arrays.asList(
