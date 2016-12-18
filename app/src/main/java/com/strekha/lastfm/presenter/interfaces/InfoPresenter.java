@@ -1,6 +1,6 @@
-package com.strekha.lastfm.presenter;
+package com.strekha.lastfm.presenter.interfaces;
 
-import com.strekha.lastfm.view.InfoView;
+import com.strekha.lastfm.view.interfaces.InfoView;
 
 public interface InfoPresenter {
     void getData(String title, String lang);

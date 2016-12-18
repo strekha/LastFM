@@ -1,10 +1,14 @@
 
-package com.strekha.lastfm.model.content.info;
+package com.strekha.lastfm.POJO.info;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tag {
+public class Artist_ implements Parcelable {
 
     @SerializedName("name")
     @Expose
@@ -12,6 +16,9 @@ public class Tag {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("image")
+    @Expose
+    private List<Image_> image = null;
 
     /**
      * 
@@ -49,4 +56,31 @@ public class Tag {
         this.url = url;
     }
 
+    /**
+     * 
+     * @return
+     *     The image
+     */
+    public List<Image_> getImage() {
+        return image;
+    }
+
+    /**
+     * 
+     * @param image
+     *     The image
+     */
+    public void setImage(List<Image_> image) {
+        this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
 }

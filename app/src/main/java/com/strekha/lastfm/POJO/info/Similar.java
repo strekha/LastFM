@@ -1,5 +1,5 @@
 
-package com.strekha.lastfm.model.content.info;
+package com.strekha.lastfm.POJO.info;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

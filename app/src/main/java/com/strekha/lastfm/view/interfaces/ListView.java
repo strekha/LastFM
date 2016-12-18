@@ -1,6 +1,6 @@
-package com.strekha.lastfm.view;
+package com.strekha.lastfm.view.interfaces;
 
-import com.strekha.lastfm.model.content.top.Artist;
+import com.strekha.lastfm.POJO.top.Artist;
 
 import java.util.List;
 

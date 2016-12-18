@@ -1,4 +1,4 @@
-package com.strekha.lastfm.model.content.top;
+package com.strekha.lastfm.POJO.top;
 
 import java.util.Comparator;
 
