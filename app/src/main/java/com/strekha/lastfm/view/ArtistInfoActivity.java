@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
@@ -43,6 +42,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
     @Override
     public void setInfo(ArtistInfo artistInfo) {
         ((ContentLoadingProgressBar) findViewById(R.id.info_loading_progress)).hide();
+
         TextView listeners = (TextView) findViewById(R.id.listeners);
         TextView playcount = (TextView) findViewById(R.id.playcount);
         TextView bio = (TextView) findViewById(R.id.bio);
@@ -55,7 +55,10 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
         listeners.setText(artistInfo.getArtist().getStats().getListeners());
         playcount.setText(artistInfo.getArtist().getStats().getPlaycount());
         image.setImageURI(artistInfo.getArtist().getImage().get(4).getText());
-        bio.setText(artistInfo.getArtist().getBio().getContent());
+        image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
+        String biography = artistInfo.getArtist().getBio().getContent();
+        biography = biography.substring(0, biography.lastIndexOf("<a href"));
+        bio.setText(biography);
 
         ExpandableAdapter adapter = new ExpandableAdapter(Arrays.asList(
                 new SimilarGroup(getResources().getString(R.string.similar),
