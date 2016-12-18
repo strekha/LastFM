@@ -1,12 +1,16 @@
 package com.strekha.lastfm.view;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -16,6 +20,7 @@ import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
 import com.strekha.lastfm.model.content.info.ArtistInfo;
+import com.strekha.lastfm.model.content.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.presenter.InfoPresenter;
 
@@ -24,6 +29,7 @@ import java.util.Arrays;
 public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
 
     private InfoPresenter presenter;
+    private GridLayout tags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
     @Override
     public void setInfo(ArtistInfo artistInfo) {
         ((ContentLoadingProgressBar) findViewById(R.id.info_loading_progress)).hide();
+        tags = (GridLayout) findViewById(R.id.tags);
 
         TextView listeners = (TextView) findViewById(R.id.listeners);
         TextView playcount = (TextView) findViewById(R.id.playcount);
@@ -59,6 +66,9 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
         String biography = artistInfo.getArtist().getBio().getContent();
         biography = biography.substring(0, biography.lastIndexOf("<a href"));
         bio.setText(biography);
+        for (Tag tag : artistInfo.getArtist().getTags().getTag()){
+            addTag(tag.getName());
+        }
 
         ExpandableAdapter adapter = new ExpandableAdapter(Arrays.asList(
                 new SimilarGroup(getResources().getString(R.string.similar),
@@ -74,5 +84,22 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
         Intent intent = new Intent(this, ArtistInfoActivity.class);
         intent.putExtra("title", artist);
         startActivity(intent);
+    }
+
+    private void addTag(String tag){
+        TextView newTag = new TextView(this);
+        newTag.setBackground(getResources().getDrawable(R.drawable.tag_background));
+        newTag.setPadding((int) getResources().getDimension(R.dimen.horizontal_tag_padding),
+                (int) getResources().getDimension(R.dimen.vertical_tag_padding),
+                (int) getResources().getDimension(R.dimen.horizontal_tag_padding),
+                (int) getResources().getDimension(R.dimen.vertical_tag_padding));
+        newTag.setTextColor(getResources().getColor(R.color.white));
+        newTag.setText(tag);
+        GridLayout.LayoutParams params =
+                new GridLayout.LayoutParams();
+        params.setMargins(0, (int) getResources().getDimension(R.dimen.vertical_tag_margin),
+                (int) getResources().getDimension(R.dimen.horizontal_tag_margin), 0);
+        newTag.setLayoutParams(params);
+        tags.addView(newTag, params);
     }
 }

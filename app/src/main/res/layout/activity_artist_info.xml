@@ -37,6 +37,13 @@
                 android:layout_marginRight="@dimen/horizontal_margin"
                 android:orientation="vertical">
 
+                <GridLayout android:id="@id/tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:layout_marginBottom="5dp">
+                </GridLayout>
+
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
