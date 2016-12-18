@@ -1,11 +1,13 @@
 package com.strekha.lastfm.view;
 
+import android.content.Intent;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -59,7 +61,15 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
                 new SimilarGroup(getResources().getString(R.string.similar),
                         artistInfo.getArtist().getSimilar().getArtist())));
 
+        adapter.setOnItemClickListener(title -> startInfoActivity(title));
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    private void startInfoActivity(String artist) {
+        Intent intent = new Intent(this, ArtistInfoActivity.class);
+        intent.putExtra("title", artist);
+        startActivity(intent);
     }
 }
