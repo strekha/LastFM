@@ -232,7 +232,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="8165f163dedbda2555d8245df32eae3c7356eb87">
+        sha1="0cd1972e6aed4f37e756bc780b899d00e91f06dc">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_644d6ffea26f96debc758687905cffb4ac0e8ba5\classes.dex" />
     </item>
     <item
@@ -268,7 +268,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="1c29339d7b099aec6b807bf8b6f3c48bf220d512">
+        sha1="a6f116f8c9d41df0650d0bb3d691d141097b6d47">
         <dex dex="D:\android\Lastfm\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9f4649d807f4b628fc52cc114e97b98515bdb12d\classes.dex" />
     </item>
     <item
