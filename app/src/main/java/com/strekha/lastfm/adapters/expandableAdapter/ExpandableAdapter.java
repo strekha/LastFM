@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.model.content.info.Artist_;
+import com.strekha.lastfm.POJO.info.Artist_;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 

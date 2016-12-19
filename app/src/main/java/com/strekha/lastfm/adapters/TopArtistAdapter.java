@@ -4,11 +4,10 @@ import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.strekha.lastfm.R;
-import com.strekha.lastfm.model.content.top.Artist;
+import com.strekha.lastfm.POJO.top.Artist;
 
 import java.util.List;
 

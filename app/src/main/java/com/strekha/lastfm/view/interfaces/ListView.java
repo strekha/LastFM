@@ -11,4 +11,6 @@ import java.util.List;
 public interface ListView {
     void setData(List<Artist> list);
     void makeToast(String message);
+    boolean isNetworkAvailable();
+    void showNetworkIsNotAvailable();
 }

@@ -4,10 +4,11 @@ import android.util.Log;
 
 import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.model.LastFMApi;
-import com.strekha.lastfm.model.content.top.Artist;
-import com.strekha.lastfm.model.content.top.ArtistComparator;
-import com.strekha.lastfm.model.content.top.TopArtists;
-import com.strekha.lastfm.view.ListView;
+import com.strekha.lastfm.POJO.top.Artist;
+import com.strekha.lastfm.POJO.top.ArtistComparator;
+import com.strekha.lastfm.POJO.top.TopArtists;
+import com.strekha.lastfm.presenter.interfaces.ListPresenter;
+import com.strekha.lastfm.view.interfaces.ListView;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,10 @@ public class ListActivityPresenter implements ListPresenter {
     @Override
     public void getData() {
         if (lastFM == null) lastFM = new LastFM();
+        if (!view.isNetworkAvailable()) {
+            view.showNetworkIsNotAvailable();
+            return;
+        }
         Observable<TopArtists> artistInfo = lastFM.getTopArtists();
         artistInfo.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +49,6 @@ public class ListActivityPresenter implements ListPresenter {
                     public void onNext(TopArtists topArtists) {
                         artists = topArtists.getArtists().getArtist();
                         Collections.sort(artists, new ArtistComparator());
-                        Log.d("mylog", artists.get(0).getName());
                         view.setData(artists);
                     }
                 });

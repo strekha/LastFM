@@ -4,4 +4,5 @@
     <string name="listeners">Слушателей:</string>
     <string name="similar">Похожие исполнители</string>
     <string name="lang">ru</string>
+    <string name="network_is_not_available">Нет подключения к сети.</string>
 </resources>

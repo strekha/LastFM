@@ -1,17 +1,19 @@
 package com.strekha.lastfm.view;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
@@ -19,14 +21,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
-import com.strekha.lastfm.model.content.info.ArtistInfo;
-import com.strekha.lastfm.model.content.info.Tag;
+import com.strekha.lastfm.POJO.info.ArtistInfo;
+import com.strekha.lastfm.POJO.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
-import com.strekha.lastfm.presenter.InfoPresenter;
+import com.strekha.lastfm.presenter.interfaces.InfoPresenter;
+import com.strekha.lastfm.view.interfaces.InfoView;
 
 import java.util.Arrays;
 
-public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
+public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
     private InfoPresenter presenter;
     private GridLayout tags;
@@ -61,7 +64,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
 
         listeners.setText(artistInfo.getArtist().getStats().getListeners());
         playcount.setText(artistInfo.getArtist().getStats().getPlaycount());
-        image.setImageURI(artistInfo.getArtist().getImage().get(4).getText());
+        image.setImageURI(artistInfo.getArtist().getImage().get(3).getText());
         image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
         String biography = artistInfo.getArtist().getBio().getContent();
         biography = biography.substring(0, biography.lastIndexOf("<a href"));
@@ -78,6 +81,23 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView{
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        if (getApplicationContext() == null) return false;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network = connectivityManager.getActiveNetworkInfo();
+        return network != null && network.isConnected();
+    }
+
+    @Override
+    public void showNetworkIsNotAvailable() {
+        Toast.makeText(this, getString(R.string.network_is_not_available), Toast.LENGTH_LONG).show();
+        Handler handler = new Handler();
+        handler.postDelayed(() ->
+                presenter.getData(getSupportActionBar().getTitle().toString(), getString(R.string.lang)), 10000);
     }
 
     private void startInfoActivity(String artist) {
