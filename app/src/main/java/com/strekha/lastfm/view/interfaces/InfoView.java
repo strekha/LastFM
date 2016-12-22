@@ -6,4 +6,5 @@ public interface InfoView {
     void setInfo(ArtistInfo artistInfo);
     boolean isNetworkAvailable();
     void showNetworkIsNotAvailable();
+    void makeToast(String message);
 }

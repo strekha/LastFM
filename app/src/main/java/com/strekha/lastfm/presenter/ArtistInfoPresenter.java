@@ -25,9 +25,9 @@ public class ArtistInfoPresenter implements InfoPresenter {
         Observable<ArtistInfo> artistInfo = lastFM.getArtistInfo(title, lang);
         artistInfo.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(information -> {
-                    view.setInfo(information);
-                });
+                .subscribe(
+                        information -> view.setInfo(information),
+                        error -> view.makeToast(error.getMessage()));
     }
 
     @Override

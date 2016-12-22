@@ -94,9 +94,13 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
     @Override
     public void showNetworkIsNotAvailable() {
-        Toast.makeText(this, getString(R.string.network_is_not_available), Toast.LENGTH_LONG).show();
-        Handler handler = new Handler();
-        handler.postDelayed(() ->
+        makeToast(getString(R.string.network_is_not_available));
+    }
+
+    @Override
+    public void makeToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        new Handler().postDelayed(() ->
                 presenter.getData(getSupportActionBar().getTitle().toString(), getString(R.string.lang)), 10000);
     }
 

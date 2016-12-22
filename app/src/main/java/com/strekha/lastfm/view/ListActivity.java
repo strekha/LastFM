@@ -66,6 +66,8 @@ public class ListActivity extends AppCompatActivity implements ListView {
     public void makeToast(String message) {
         Log.e("myLog", message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Handler handler = new Handler();
+        handler.postDelayed(() -> listPresenter.getData(), 10000);
     }
 
     @Override
@@ -80,7 +82,5 @@ public class ListActivity extends AppCompatActivity implements ListView {
     @Override
     public void showNetworkIsNotAvailable() {
         makeToast(getString(R.string.network_is_not_available));
-        Handler handler = new Handler();
-        handler.postDelayed(() -> listPresenter.getData(), 10000);
     }
 }

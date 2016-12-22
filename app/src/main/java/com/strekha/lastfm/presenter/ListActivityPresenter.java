@@ -1,6 +1,5 @@
 package com.strekha.lastfm.presenter;
 
-import android.util.Log;
 
 import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.model.LastFMApi;
