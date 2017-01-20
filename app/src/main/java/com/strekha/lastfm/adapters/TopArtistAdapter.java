@@ -1,6 +1,5 @@
 package com.strekha.lastfm.adapters;
 
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,23 +8,24 @@ import android.view.ViewGroup;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.POJO.top.Artist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopArtistAdapter extends RecyclerView.Adapter<ArtistViewHolder> {
 
-    private List<Artist> topArtists;
-    private OnItemClickListener onItemClickListener;
+    private List<Artist> mTopArtists = new ArrayList<>();
+    private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
         void onItemClick(String artist);
     }
 
-    public void setList(List<Artist> topArtists) {
-        this.topArtists = topArtists;
+    public void setList(List<Artist> topArtists){
+        this.mTopArtists = topArtists;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -36,17 +36,14 @@ public class TopArtistAdapter extends RecyclerView.Adapter<ArtistViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ArtistViewHolder card, int position) {
-        card.mCard.setOnClickListener(v -> onItemClickListener.onItemClick(card.mName.getText().toString()));
-        card.mName.setText(topArtists.get(position).getName());
-        card.mPlaycounts.setText(topArtists.get(position).getPlaycount());
-        card.mListeners.setText(topArtists.get(position).getListeners());
-        card.mImage.setImageURI(Uri.parse(topArtists.get(position).getImage().get(2).getText()));
+    public void onBindViewHolder(ArtistViewHolder viewHolder, int position) {
+
+        viewHolder.setOnClickListener(view -> mOnItemClickListener.onItemClick(viewHolder.getName()));
+        viewHolder.setData(mTopArtists.get(position));
     }
 
     @Override
     public int getItemCount() {
-        if (topArtists != null) return topArtists.size();
-        else return 0;
+        return mTopArtists.size();
     }
 }

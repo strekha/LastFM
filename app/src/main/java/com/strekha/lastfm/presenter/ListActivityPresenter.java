@@ -1,61 +1,54 @@
 package com.strekha.lastfm.presenter;
 
-import android.util.Log;
-
-import com.strekha.lastfm.model.LastFM;
-import com.strekha.lastfm.model.LastFMApi;
-import com.strekha.lastfm.POJO.top.Artist;
-import com.strekha.lastfm.POJO.top.ArtistComparator;
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import com.strekha.lastfm.POJO.top.TopArtists;
-import com.strekha.lastfm.presenter.interfaces.ListPresenter;
+import com.strekha.lastfm.model.DatabaseHelper;
+import com.strekha.lastfm.model.JsonParser;
+import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.view.interfaces.ListView;
 
-import java.util.Collections;
-import java.util.List;
-
-import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ListActivityPresenter implements ListPresenter {
+@InjectViewState
+public class ListActivityPresenter extends MvpPresenter<ListView> {
 
-    private ListView view;
-    private List<Artist> artists;
-    private LastFMApi lastFM;
+    private static final String TOP_ARTISTS_TAG = "top_artisst_tag";
 
-    @Override
-    public void getData() {
-        if (lastFM == null) lastFM = new LastFM();
-        if (!view.isNetworkAvailable()) {
-            view.showNetworkIsNotAvailable();
-            return;
-        }
-        Observable<TopArtists> artistInfo = lastFM.getTopArtists();
-        artistInfo.subscribeOn(Schedulers.newThread())
+    private LastFM mLastFM = LastFM.getInstance();
+
+    public void getFreshData() {
+        getViewState().showProgress();
+        mLastFM.getTopArtists()
+                .subscribeOn(Schedulers.io())
+                .retry(1)
+                .observeOn(Schedulers.computation())
+                .doOnNext(json -> DatabaseHelper.getInstance().writeJson(TOP_ARTISTS_TAG, json))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<TopArtists>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        view.makeToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(TopArtists topArtists) {
-                        artists = topArtists.getArtists().getArtist();
-                        Collections.sort(artists, new ArtistComparator());
-                        view.setData(artists);
-                    }
-                });
+                .subscribe(
+                        json -> {
+                            getViewState().setData(JsonParser
+                                    .parse(TopArtists.class, json)
+                                    .getArtists());
+                            getViewState().hideProgress();
+                        },
+                        error -> getViewState().handleError(error.getMessage()));
     }
 
-    @Override
-    public void bindView(ListView view) {
-        this.view = view;
+    public void getCachedData(){
+        DatabaseHelper.getInstance()
+                .readJson(TOP_ARTISTS_TAG)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        jsonObject -> {
+                            if (jsonObject == null) getViewState().updateData();
+                            else getViewState().setData(JsonParser
+                                    .parse(TopArtists.class, jsonObject)
+                                    .getArtists());
+                        },
+                        error -> getViewState().handleError(error.getMessage()));
     }
+
 }

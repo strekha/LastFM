@@ -11,22 +11,8 @@ public class Tags {
     @Expose
     private List<Tag> tag = null;
 
-    /**
-     * 
-     * @return
-     *     The tag
-     */
     public List<Tag> getTag() {
         return tag;
-    }
-
-    /**
-     * 
-     * @param tag
-     *     The tag
-     */
-    public void setTag(List<Tag> tag) {
-        this.tag = tag;
     }
 
 }

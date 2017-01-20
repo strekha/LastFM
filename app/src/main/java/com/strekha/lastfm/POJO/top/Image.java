@@ -9,44 +9,8 @@ public class Image {
     @SerializedName("#text")
     @Expose
     private String text;
-    @SerializedName("size")
-    @Expose
-    private String size;
 
-    /**
-     * 
-     * @return
-     *     The text
-     */
-    public String getText() {
+    public String getUri() {
         return text;
     }
-
-    /**
-     * 
-     * @param text
-     *     The #text
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    /**
-     * 
-     * @return
-     *     The size
-     */
-    public String getSize() {
-        return size;
-    }
-
-    /**
-     * 
-     * @param size
-     *     The size
-     */
-    public void setSize(String size) {
-        this.size = size;
-    }
-
 }

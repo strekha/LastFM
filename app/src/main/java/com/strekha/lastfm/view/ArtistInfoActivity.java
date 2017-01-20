@@ -4,54 +4,61 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.strekha.lastfm.POJO.info.ArtistInfo;
+import com.strekha.lastfm.POJO.info.Tag;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
-import com.strekha.lastfm.POJO.info.ArtistInfo;
-import com.strekha.lastfm.POJO.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
-import com.strekha.lastfm.presenter.interfaces.InfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
 import java.util.Arrays;
+import java.util.Collections;
 
-public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
+public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {
 
-    private InfoPresenter presenter;
-    private GridLayout tags;
+    public static final int COVER = 3;
+    @InjectPresenter
+    public ArtistInfoPresenter mPresenter;
+    private GridLayout mTagsLayout;
+    private String mArtistTitle;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_artist_info);
-        String artistTitle = getIntent().getStringExtra("title");
-        getSupportActionBar().setTitle(artistTitle);
+        mArtistTitle = getIntent().getStringExtra(ListActivity.ARTIST_TITLE);
+
+        getSupportActionBar().setTitle(mArtistTitle);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        presenter = new ArtistInfoPresenter();
-        presenter.bindView(this);
-        presenter.getData(artistTitle, getResources().getString(R.string.lang));
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this::updateData);
+
+        mPresenter.getCachedData(mArtistTitle);
     }
 
     @Override
     public void setInfo(ArtistInfo artistInfo) {
-        ((ContentLoadingProgressBar) findViewById(R.id.info_loading_progress)).hide();
-        tags = (GridLayout) findViewById(R.id.tags);
+
+        mTagsLayout = (GridLayout) findViewById(R.id.tags);
 
         TextView listeners = (TextView) findViewById(R.id.listeners);
         TextView playcount = (TextView) findViewById(R.id.playcount);
@@ -64,27 +71,50 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
         listeners.setText(artistInfo.getArtist().getStats().getListeners());
         playcount.setText(artistInfo.getArtist().getStats().getPlaycount());
-        image.setImageURI(artistInfo.getArtist().getImage().get(3).getText());
+        image.setImageURI(artistInfo.getArtist().getImages().get(COVER).getUri());
         image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
+
         String biography = artistInfo.getArtist().getBio().getContent();
         biography = biography.substring(0, biography.lastIndexOf("<a href"));
         bio.setText(biography);
-        for (Tag tag : artistInfo.getArtist().getTags().getTag()){
+
+        mTagsLayout.removeAllViews();
+        for (Tag tag : artistInfo.getArtist().getTags()){
             addTag(tag.getName());
         }
 
-        ExpandableAdapter adapter = new ExpandableAdapter(Arrays.asList(
+        ExpandableAdapter adapter = new ExpandableAdapter(Collections.singletonList(
                 new SimilarGroup(getResources().getString(R.string.similar),
-                        artistInfo.getArtist().getSimilar().getArtist())));
+                        artistInfo.getArtist().getSimilar())));
 
-        adapter.setOnItemClickListener(title -> startInfoActivity(title));
+        adapter.setOnItemClickListener(this::startInfoActivity);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public boolean isNetworkAvailable() {
+    public void handleError(String errorMessage) {
+        makeToast(errorMessage);
+    }
+
+    @Override
+    public void showProgress() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void updateData() {
+        if (isNetworkAvailable()) mPresenter.getFreshData(mArtistTitle, getString(R.string.lang));
+        else showNetworkIsNotAvailable();
+    }
+
+    private boolean isNetworkAvailable() {
         if (getApplicationContext() == null) return false;
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -92,34 +122,40 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
         return network != null && network.isConnected();
     }
 
-    @Override
-    public void showNetworkIsNotAvailable() {
-        Toast.makeText(this, getString(R.string.network_is_not_available), Toast.LENGTH_LONG).show();
-        Handler handler = new Handler();
-        handler.postDelayed(() ->
-                presenter.getData(getSupportActionBar().getTitle().toString(), getString(R.string.lang)), 10000);
+    private void showNetworkIsNotAvailable() {
+        hideProgress();
+        makeToast(getString(R.string.network_is_not_available));
     }
 
     private void startInfoActivity(String artist) {
         Intent intent = new Intent(this, ArtistInfoActivity.class);
-        intent.putExtra("title", artist);
+        intent.putExtra(ListActivity.ARTIST_TITLE, artist);
         startActivity(intent);
     }
 
     private void addTag(String tag){
         TextView newTag = new TextView(this);
-        newTag.setBackground(getResources().getDrawable(R.drawable.tag_background));
-        newTag.setPadding((int) getResources().getDimension(R.dimen.horizontal_tag_padding),
+        newTag.setText(tag);
+        mTagsLayout.addView(newTag, getParamsForTag(newTag));
+    }
+
+    private GridLayout.LayoutParams getParamsForTag(TextView textView){
+        textView.setBackground(getResources().getDrawable(R.drawable.tag_background));
+        textView.setPadding((int) getResources().getDimension(R.dimen.horizontal_tag_padding),
                 (int) getResources().getDimension(R.dimen.vertical_tag_padding),
                 (int) getResources().getDimension(R.dimen.horizontal_tag_padding),
                 (int) getResources().getDimension(R.dimen.vertical_tag_padding));
-        newTag.setTextColor(getResources().getColor(R.color.white));
-        newTag.setText(tag);
+        textView.setTextColor(getResources().getColor(R.color.white));
         GridLayout.LayoutParams params =
                 new GridLayout.LayoutParams();
         params.setMargins(0, (int) getResources().getDimension(R.dimen.vertical_tag_margin),
                 (int) getResources().getDimension(R.dimen.horizontal_tag_margin), 0);
-        newTag.setLayoutParams(params);
-        tags.addView(newTag, params);
+        textView.setLayoutParams(params);
+        return params;
     }
+
+    private void makeToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
 }

@@ -1,34 +1,37 @@
 package com.strekha.lastfm.model;
 
-import com.strekha.lastfm.POJO.info.ArtistInfo;
-import com.strekha.lastfm.POJO.top.TopArtists;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import rx.Observable;
 
-public class LastFM implements LastFMApi {
+public class LastFM {
 
-    Retrofit retrofit;
-    LastFMApi api;
+    private static final String API_KEY = "3c6754afec9ea1df32d686f9434b1f31";
+    private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
-    public LastFM() {
-        retrofit = new Retrofit.Builder()
+    private LastFMApi mApi;
+    private static LastFM mLastFM;
+
+    public static LastFM getInstance(){
+        if (mLastFM == null) mLastFM = new LastFM();
+        return mLastFM;
+    }
+
+    private LastFM() {
+        Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://ws.audioscrobbler.com/2.0/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .baseUrl(BASE_URL)
                 .build();
-        api = retrofit.create(LastFMApi.class);
+        mApi = retrofit.create(LastFMApi.class);
     }
 
-    public Observable<TopArtists> getTopArtists() {
-        return api.getTopArtists();
+    public Observable<String> getTopArtists() {
+        return mApi.getTopArtists(API_KEY);
     }
 
-    @Override
-    public Observable<ArtistInfo> getArtistInfo(@Query("artist") String artist, @Query("lang") String lang) {
-        return api.getArtistInfo(artist, lang);
+    public Observable<String> getArtistInfo(String artist, String lang) {
+        return mApi.getArtistInfo(artist, lang, API_KEY);
     }
 }

@@ -9,24 +9,11 @@ public class Similar {
 
     @SerializedName("artist")
     @Expose
-    private List<Artist_> artist = null;
+    private List<Artist> artist = null;
 
-    /**
-     * 
-     * @return
-     *     The artist
-     */
-    public List<Artist_> getArtist() {
+    public List<Artist> getArtist() {
         return artist;
     }
 
-    /**
-     * 
-     * @param artist
-     *     The artist
-     */
-    public void setArtist(List<Artist_> artist) {
-        this.artist = artist;
-    }
 
 }

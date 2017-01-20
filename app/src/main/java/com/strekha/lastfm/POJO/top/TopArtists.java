@@ -4,28 +4,15 @@ package com.strekha.lastfm.POJO.top;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class TopArtists {
 
     @SerializedName("artists")
     @Expose
     private Artists artists;
 
-    /**
-     * 
-     * @return
-     *     The artists
-     */
-    public Artists getArtists() {
-        return artists;
+    public List<Artist> getArtists() {
+        return artists.getArtist();
     }
-
-    /**
-     * 
-     * @param artists
-     *     The artists
-     */
-    public void setArtists(Artists artists) {
-        this.artists = artists;
-    }
-
 }

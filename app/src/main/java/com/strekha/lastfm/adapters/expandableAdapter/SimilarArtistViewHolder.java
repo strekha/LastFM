@@ -3,9 +3,9 @@ package com.strekha.lastfm.adapters.expandableAdapter;
 import android.view.View;
 import android.widget.TextView;
 
+import com.strekha.lastfm.POJO.info.Artist;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.POJO.info.Artist_;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
 
@@ -22,7 +22,7 @@ public class SimilarArtistViewHolder extends ChildViewHolder {
         title = (TextView) itemView.findViewById(R.id.similar_artists_child);
     }
 
-    public void onBind(Artist_ artist) {
+    public void onBind(Artist artist) {
         title.setText(artist.getName());
         view.setOnClickListener(v -> onItemClickListener.onItemClick(artist.getName()));
     }

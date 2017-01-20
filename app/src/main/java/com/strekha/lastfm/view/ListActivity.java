@@ -4,83 +4,98 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
-import android.support.v4.util.TimeUtils;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.strekha.lastfm.POJO.top.Artist;
 import com.strekha.lastfm.presenter.ListActivityPresenter;
-import com.strekha.lastfm.presenter.interfaces.ListPresenter;
 import com.strekha.lastfm.view.interfaces.ListView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class ListActivity extends AppCompatActivity implements ListView {
+public class ListActivity extends MvpAppCompatActivity implements ListView {
 
-    private ListPresenter listPresenter;
-    private TopArtistAdapter adapter;
+    public static final String ARTIST_TITLE = "title";
+
+    @InjectPresenter
+    public ListActivityPresenter mPresenter;
+    private TopArtistAdapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_top_list);
 
-        listPresenter = new ListActivityPresenter();
-        listPresenter.bindView(this);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            if(isNetworkAvailable()) updateData();
+            else showNetworkIsNotAvailable();
+        });
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mAdapter = new TopArtistAdapter();
+        mAdapter.setOnItemClickListener(this::startInfoActivity);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TopArtistAdapter();
-        adapter.setOnItemClickListener(artist -> startInfoActivity(artist));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
 
-        listPresenter.getData();
+        mPresenter.getCachedData();
     }
 
     private void startInfoActivity(String artist) {
         Intent intent = new Intent(this, ArtistInfoActivity.class);
-        intent.putExtra("title", artist);
+        intent.putExtra(ARTIST_TITLE, artist);
         startActivity(intent);
     }
 
     @Override
     public void setData(List<Artist> list) {
-        adapter.setList(list);
-        adapter.notifyDataSetChanged();
-        ((ContentLoadingProgressBar) findViewById(R.id.progress)).hide();
+        mAdapter.setList(list);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void makeToast(String message) {
-        Log.e("myLog", message);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    public void handleError(String errorMessage) {
+        makeToast(errorMessage);
     }
 
     @Override
-    public boolean isNetworkAvailable() {
-        if (getApplicationContext() == null) return false;
+    public void showProgress() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void updateData() {
+        mPresenter.getFreshData();
+    }
+
+    private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) return false;
         NetworkInfo network = connectivityManager.getActiveNetworkInfo();
         return network != null && network.isConnected();
     }
 
-    @Override
-    public void showNetworkIsNotAvailable() {
+    private void makeToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void showNetworkIsNotAvailable() {
+        hideProgress();
         makeToast(getString(R.string.network_is_not_available));
-        Handler handler = new Handler();
-        handler.postDelayed(() -> listPresenter.getData(), 10000);
     }
 }

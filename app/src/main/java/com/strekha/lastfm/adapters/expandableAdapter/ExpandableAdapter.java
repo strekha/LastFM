@@ -4,9 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.strekha.lastfm.POJO.info.Artist;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.POJO.info.Artist_;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
@@ -38,7 +38,7 @@ public class ExpandableAdapter extends
     @Override
     public void onBindChildViewHolder(SimilarArtistViewHolder holder, int flatPosition,
                                       ExpandableGroup group, int childIndex) {
-        final Artist_ artist = (Artist_) group.getItems().get(childIndex);
+        final Artist artist = (Artist) group.getItems().get(childIndex);
         holder.setOnItemClickListener(onItemClickListener);
         holder.onBind(artist);
     }

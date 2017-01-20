@@ -1,37 +1,53 @@
 package com.strekha.lastfm.presenter;
 
-import com.strekha.lastfm.model.LastFM;
-import com.strekha.lastfm.model.LastFMApi;
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import com.strekha.lastfm.POJO.info.ArtistInfo;
-import com.strekha.lastfm.presenter.interfaces.InfoPresenter;
+import com.strekha.lastfm.model.DatabaseHelper;
+import com.strekha.lastfm.model.JsonParser;
+import com.strekha.lastfm.model.LastFM;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ArtistInfoPresenter implements InfoPresenter {
+@InjectViewState
+public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
 
-    private LastFMApi lastFM;
-    private InfoView view;
+    private LastFM mLastFM = LastFM.getInstance();
 
-    @Override
-    public void getData(String title, String lang) {
-        if (lastFM == null) lastFM = new LastFM();
-        if (!view.isNetworkAvailable()) {
-            view.showNetworkIsNotAvailable();
-            return;
-        }
-        Observable<ArtistInfo> artistInfo = lastFM.getArtistInfo(title, lang);
-        artistInfo.subscribeOn(Schedulers.newThread())
+    public void getFreshData(String artist, String lang) {
+        getViewState().showProgress();
+        mLastFM.getArtistInfo(artist, lang)
+                .subscribeOn(Schedulers.io())
+                .retry(1)
+                .observeOn(Schedulers.computation())
+                .doOnNext(json -> DatabaseHelper.getInstance().writeJson(artist, json))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(information -> {
-                    view.setInfo(information);
-                });
+                .subscribe(
+                        json -> {
+                            getViewState().setInfo(JsonParser
+                                    .parse(ArtistInfo.class, json));
+                            getViewState().hideProgress();
+                        },
+                        error -> getViewState().handleError(error.getMessage()));
     }
 
-    @Override
-    public void bindView(InfoView view) {
-        this.view = view;
+    public void getCachedData(String artist){
+        DatabaseHelper.getInstance()
+                .readJson(artist)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        jsonObject -> {
+                            if (jsonObject == null) {
+                                getViewState().updateData();
+                            }
+                            else {
+                                ArtistInfo info = JsonParser.parse(ArtistInfo.class, jsonObject);
+                                getViewState().setInfo(info);
+                            }
+                        },
+                        error -> getViewState().handleError(error.getMessage()));
     }
 }
