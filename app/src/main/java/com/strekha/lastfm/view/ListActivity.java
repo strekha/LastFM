@@ -14,8 +14,8 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.POJO.top.Artist;
-import com.strekha.lastfm.presenter.ListActivityPresenter;
+import com.strekha.lastfm.pojo.top.Artist;
+import com.strekha.lastfm.presenter.TopArtistsListPresenter;
 import com.strekha.lastfm.view.interfaces.ListView;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
     public static final String ARTIST_TITLE = "title";
 
     @InjectPresenter
-    public ListActivityPresenter mPresenter;
+    public TopArtistsListPresenter mPresenter;
     private TopArtistAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -36,10 +36,7 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
         setContentView(R.layout.activity_top_list);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            if(isNetworkAvailable()) updateData();
-            else showNetworkIsNotAvailable();
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         mAdapter = new TopArtistAdapter();
@@ -47,7 +44,7 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
 
-        mPresenter.getCachedData();
+        mPresenter.requestData();
     }
 
     private void startInfoActivity(String artist) {
@@ -77,24 +74,12 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    @Override
-    public void updateData() {
-        mPresenter.getFreshData();
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null) return false;
-        NetworkInfo network = connectivityManager.getActiveNetworkInfo();
-        return network != null && network.isConnected();
-    }
-
     private void makeToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    private void showNetworkIsNotAvailable() {
+    @Override
+    public void showNetworkIsNotAvailable() {
         hideProgress();
         makeToast(getString(R.string.network_is_not_available));
     }

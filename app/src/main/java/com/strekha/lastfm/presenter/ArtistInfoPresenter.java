@@ -2,12 +2,13 @@ package com.strekha.lastfm.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.strekha.lastfm.POJO.info.ArtistInfo;
-import com.strekha.lastfm.model.DatabaseHelper;
-import com.strekha.lastfm.model.JsonParser;
-import com.strekha.lastfm.model.LastFM;
+import com.strekha.lastfm.pojo.info.ArtistInfo;
+import com.strekha.lastfm.model.db.DatabaseHelper;
+import com.strekha.lastfm.model.deserialization.JsonParser;
+import com.strekha.lastfm.model.network.LastFM;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -34,8 +35,8 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
     }
 
     public void getCachedData(String artist){
-        DatabaseHelper.getInstance()
-                .readJson(artist)
+        Observable.just(DatabaseHelper.getInstance()
+                .readJson(artist))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

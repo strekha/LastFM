@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.strekha.lastfm.R;
-import com.strekha.lastfm.POJO.top.Artist;
+import com.strekha.lastfm.pojo.top.Artist;
 
 import java.util.ArrayList;
 import java.util.List;

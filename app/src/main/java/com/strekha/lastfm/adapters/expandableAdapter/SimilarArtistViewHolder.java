@@ -3,7 +3,7 @@ package com.strekha.lastfm.adapters.expandableAdapter;
 import android.view.View;
 import android.widget.TextView;
 
-import com.strekha.lastfm.POJO.info.Artist;
+import com.strekha.lastfm.pojo.info.Artist;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;

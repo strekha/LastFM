@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -17,18 +15,16 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.strekha.lastfm.POJO.info.ArtistInfo;
-import com.strekha.lastfm.POJO.info.Tag;
+import com.strekha.lastfm.pojo.info.ArtistInfo;
+import com.strekha.lastfm.pojo.info.Tag;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {

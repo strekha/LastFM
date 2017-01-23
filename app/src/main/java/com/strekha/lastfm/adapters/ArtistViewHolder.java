@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.strekha.lastfm.POJO.top.Artist;
+import com.strekha.lastfm.pojo.top.Artist;
 import com.strekha.lastfm.R;
 
 public class ArtistViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,5 @@
 
-package com.strekha.lastfm.POJO.info;
+package com.strekha.lastfm.pojo.info;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.strekha.lastfm.POJO.top.Image;
+import com.strekha.lastfm.pojo.top.Image;
 
 public class Artist implements Parcelable {
 
