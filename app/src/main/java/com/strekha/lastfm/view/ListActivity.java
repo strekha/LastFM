@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.strekha.lastfm.pojo.top.Artist;
@@ -61,7 +62,7 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
 
     @Override
     public void handleError(String errorMessage) {
-        makeToast(errorMessage);
+        LastFmApplication.getInstance().makeToast(errorMessage);
     }
 
     @Override
@@ -74,13 +75,9 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void makeToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void showNetworkIsNotAvailable() {
         hideProgress();
-        makeToast(getString(R.string.network_is_not_available));
+        LastFmApplication.getInstance().makeToast(getString(R.string.network_is_not_available));
     }
 }

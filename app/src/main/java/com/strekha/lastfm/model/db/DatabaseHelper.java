@@ -3,7 +3,6 @@ package com.strekha.lastfm.model.db;
 import com.strekha.lastfm.pojo.JsonObject;
 
 import io.realm.Realm;
-import rx.Observable;
 
 public class DatabaseHelper {
 
@@ -29,13 +28,12 @@ public class DatabaseHelper {
     public String readJson(String tag){
             Realm realm = Realm.getDefaultInstance();
             final JsonObject[] jsonObject = new JsonObject[1];
-            JsonObject object = jsonObject[0];
             realm.executeTransaction(realm1 -> {
                 jsonObject[0] = findInRealm(tag, realm1);
                 if (jsonObject[0] != null) jsonObject[0] = realm1.copyFromRealm(jsonObject[0]);
             });
             realm.close();
-            if (object != null) return object.getJson();
+            if (jsonObject[0] != null) return jsonObject[0].getJson();
             else return null;
     }
 

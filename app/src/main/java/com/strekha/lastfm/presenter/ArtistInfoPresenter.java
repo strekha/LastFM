@@ -2,6 +2,10 @@ package com.strekha.lastfm.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.strekha.lastfm.model.ArtistInfoModel;
+import com.strekha.lastfm.model.TopArtistsModel;
+import com.strekha.lastfm.model.network.NetworkChangeReceiver;
+import com.strekha.lastfm.pojo.info.Artist;
 import com.strekha.lastfm.pojo.info.ArtistInfo;
 import com.strekha.lastfm.model.db.DatabaseHelper;
 import com.strekha.lastfm.model.deserialization.JsonParser;
@@ -10,45 +14,43 @@ import com.strekha.lastfm.view.interfaces.InfoView;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 @InjectViewState
 public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
 
-    private LastFM mLastFM = LastFM.getInstance();
+    private ArtistInfoModel mModel = new ArtistInfoModel();
 
-    public void getFreshData(String artist, String lang) {
+    public void requestData(String artist, String lang) {
         getViewState().showProgress();
-        mLastFM.getArtistInfo(artist, lang)
+        mModel.requestCachedData(artist)
                 .subscribeOn(Schedulers.io())
-                .retry(1)
-                .observeOn(Schedulers.computation())
-                .doOnNext(json -> DatabaseHelper.getInstance().writeJson(artist, json))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        json -> {
-                            getViewState().setInfo(JsonParser
-                                    .parse(ArtistInfo.class, json));
-                            getViewState().hideProgress();
+                        info -> {
+                            if (info == null) requestFreshData(artist, lang);
+                            else {
+                                getViewState().setInfo(info);
+                                getViewState().hideProgress();
+                            }
                         },
-                        error -> getViewState().handleError(error.getMessage()));
+                        error -> getViewState().handleError(error.getMessage())
+                );
     }
 
-    public void getCachedData(String artist){
-        Observable.just(DatabaseHelper.getInstance()
-                .readJson(artist))
+
+    public void requestFreshData(String artist, String lang) {
+        if (!NetworkChangeReceiver.isNetworkAvailable()) {
+            getViewState().showNetworkIsNotAvailable();
+            return;
+        }
+        mModel.requestFreshData(artist, lang)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        jsonObject -> {
-                            if (jsonObject == null) {
-                                getViewState().updateData();
-                            }
-                            else {
-                                ArtistInfo info = JsonParser.parse(ArtistInfo.class, jsonObject);
-                                getViewState().setInfo(info);
-                            }
-                        },
+                        info -> getViewState().setInfo(info),
                         error -> getViewState().handleError(error.getMessage()));
+        getViewState().hideProgress();
     }
 }

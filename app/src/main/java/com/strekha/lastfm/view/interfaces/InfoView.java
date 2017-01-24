@@ -3,13 +3,13 @@ package com.strekha.lastfm.view.interfaces;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.strekha.lastfm.pojo.info.ArtistInfo;
+import com.strekha.lastfm.pojo.info.Artist;
 
 
 public interface InfoView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void setInfo(ArtistInfo artist);
+    void setInfo(Artist artist);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void handleError(String errorMessage);
@@ -21,5 +21,5 @@ public interface InfoView extends MvpView {
     void hideProgress();
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void updateData();
+    void showNetworkIsNotAvailable();
 }

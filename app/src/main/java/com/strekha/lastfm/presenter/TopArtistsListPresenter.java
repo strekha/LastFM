@@ -26,7 +26,8 @@ public class TopArtistsListPresenter extends MvpPresenter<ListView> {
                                 getViewState().setData(artists);
                                 getViewState().hideProgress();
                             }
-                        }
+                        },
+                        error -> getViewState().handleError(error.getMessage())
                 );
     }
 
@@ -39,7 +40,9 @@ public class TopArtistsListPresenter extends MvpPresenter<ListView> {
         mModel.requestFreshData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(artists -> getViewState().setData(artists));
+                .subscribe(
+                        artists -> getViewState().setData(artists),
+                        error -> getViewState().handleError(error.getMessage()));
         getViewState().hideProgress();
     }
 }

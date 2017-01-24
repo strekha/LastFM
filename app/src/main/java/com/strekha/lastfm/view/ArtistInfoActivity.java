@@ -1,9 +1,6 @@
 package com.strekha.lastfm.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.strekha.lastfm.pojo.info.ArtistInfo;
-import com.strekha.lastfm.pojo.info.Tag;
+import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
+import com.strekha.lastfm.pojo.info.Artist;
+import com.strekha.lastfm.pojo.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
@@ -30,6 +27,8 @@ import java.util.Collections;
 public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {
 
     public static final int COVER = 3;
+    private static String LANG;
+
     @InjectPresenter
     public ArtistInfoPresenter mPresenter;
     private GridLayout mTagsLayout;
@@ -41,18 +40,21 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_info);
         mArtistTitle = getIntent().getStringExtra(ListActivity.ARTIST_TITLE);
+        LANG = getString(R.string.lang);
 
         getSupportActionBar().setTitle(mArtistTitle);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(this::updateData);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData(mArtistTitle, LANG));
 
-        mPresenter.getCachedData(mArtistTitle);
+        mPresenter.requestFreshData(mArtistTitle, LANG);
     }
 
+
+
     @Override
-    public void setInfo(ArtistInfo artistInfo) {
+    public void setInfo(Artist artistInfo) {
 
         mTagsLayout = (GridLayout) findViewById(R.id.tags);
 
@@ -65,23 +67,23 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         findViewById(R.id.playcount_label).setVisibility(View.VISIBLE);
         findViewById(R.id.listeners_label).setVisibility(View.VISIBLE);
 
-        listeners.setText(artistInfo.getArtist().getStats().getListeners());
-        playcount.setText(artistInfo.getArtist().getStats().getPlaycount());
-        image.setImageURI(artistInfo.getArtist().getImages().get(COVER).getUri());
+        listeners.setText(artistInfo.getListeners());
+        playcount.setText(artistInfo.getPlaycount());
+        image.setImageURI(artistInfo.getCoverUri());
         image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
 
-        String biography = artistInfo.getArtist().getBio().getContent();
+        String biography = artistInfo.getFullBio();
         biography = biography.substring(0, biography.lastIndexOf("<a href"));
         bio.setText(biography);
 
         mTagsLayout.removeAllViews();
-        for (Tag tag : artistInfo.getArtist().getTags()){
+        for (Tag tag : artistInfo.getTags()){
             addTag(tag.getName());
         }
 
         ExpandableAdapter adapter = new ExpandableAdapter(Collections.singletonList(
                 new SimilarGroup(getResources().getString(R.string.similar),
-                        artistInfo.getArtist().getSimilar())));
+                        artistInfo.getSimilar())));
 
         adapter.setOnItemClickListener(this::startInfoActivity);
 
@@ -91,7 +93,7 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
 
     @Override
     public void handleError(String errorMessage) {
-        makeToast(errorMessage);
+        LastFmApplication.getInstance().makeToast(errorMessage);
     }
 
     @Override
@@ -105,22 +107,9 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
     }
 
     @Override
-    public void updateData() {
-        if (isNetworkAvailable()) mPresenter.getFreshData(mArtistTitle, getString(R.string.lang));
-        else showNetworkIsNotAvailable();
-    }
-
-    private boolean isNetworkAvailable() {
-        if (getApplicationContext() == null) return false;
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = connectivityManager.getActiveNetworkInfo();
-        return network != null && network.isConnected();
-    }
-
-    private void showNetworkIsNotAvailable() {
+    public void showNetworkIsNotAvailable() {
         hideProgress();
-        makeToast(getString(R.string.network_is_not_available));
+        LastFmApplication.getInstance().makeToast(getString(R.string.network_is_not_available));
     }
 
     private void startInfoActivity(String artist) {
@@ -148,10 +137,6 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
                 (int) getResources().getDimension(R.dimen.horizontal_tag_margin), 0);
         textView.setLayoutParams(params);
         return params;
-    }
-
-    private void makeToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 }

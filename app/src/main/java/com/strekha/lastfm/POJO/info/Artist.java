@@ -11,6 +11,7 @@ import com.strekha.lastfm.pojo.top.Image;
 
 public class Artist implements Parcelable {
 
+    public static final int LARGE_COVER = 3;
     @SerializedName("name")
     @Expose
     private String name;
@@ -34,6 +35,34 @@ public class Artist implements Parcelable {
         name = in.readString();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCoverUri(){
+        return image.get(LARGE_COVER).getUri();
+    }
+
+    public String getListeners(){
+        return stats.getListeners();
+    }
+
+    public String getPlaycount(){
+        return stats.getPlaycount();
+    }
+
+    public List<Artist> getSimilar() {
+        return similar.getArtist();
+    }
+
+    public List<Tag> getTags() {
+        return tags.getTag();
+    }
+
+    public String getFullBio() {
+        return bio.getContent();
+    }
+
     public static final Creator<Artist> CREATOR = new Creator<Artist>() {
         @Override
         public Artist createFromParcel(Parcel in) {
@@ -45,30 +74,6 @@ public class Artist implements Parcelable {
             return new Artist[size];
         }
     };
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Image> getImages() {
-        return image;
-    }
-
-    public Stats getStats() {
-        return stats;
-    }
-
-    public List<Artist> getSimilar() {
-        return similar.getArtist();
-    }
-
-    public List<Tag> getTags() {
-        return tags.getTag();
-    }
-
-    public Bio getBio() {
-        return bio;
-    }
 
     @Override
     public int describeContents() {
