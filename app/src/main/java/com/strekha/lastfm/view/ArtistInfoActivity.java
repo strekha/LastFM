@@ -26,7 +26,6 @@ import java.util.Collections;
 
 public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {
 
-    public static final int COVER = 3;
     private static String LANG;
 
     @InjectPresenter
@@ -48,7 +47,7 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData(mArtistTitle, LANG));
 
-        mPresenter.requestFreshData(mArtistTitle, LANG);
+        mPresenter.requestData(mArtistTitle, LANG);
     }
 
 
