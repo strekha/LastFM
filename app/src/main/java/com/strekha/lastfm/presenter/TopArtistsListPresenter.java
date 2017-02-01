@@ -2,28 +2,28 @@ package com.strekha.lastfm.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.strekha.lastfm.model.ArtistInfoModel;
+import com.strekha.lastfm.model.TopArtistsModel;
 import com.strekha.lastfm.model.network.NetworkChangeReceiver;
-import com.strekha.lastfm.view.interfaces.InfoView;
+import com.strekha.lastfm.view.interfaces.ListView;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 @InjectViewState
-public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
+public class TopArtistsListPresenter extends MvpPresenter<ListView> {
 
-    private ArtistInfoModel mModel = new ArtistInfoModel();
+    private TopArtistsModel mModel = new TopArtistsModel();
 
-    public void requestData(String artist, String lang) {
+    public void requestData() {
         getViewState().showProgress();
-        mModel.requestCachedData(artist)
+        mModel.requestCachedData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        info -> {
-                            if (info == null) requestFreshData(artist, lang);
+                        artists -> {
+                            if (artists == null) requestFreshData();
                             else {
-                                getViewState().setInfo(info);
+                                getViewState().setData(artists);
                                 getViewState().hideProgress();
                             }
                         },
@@ -32,16 +32,16 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
     }
 
 
-    public void requestFreshData(String artist, String lang) {
+    public void requestFreshData() {
         if (!NetworkChangeReceiver.isNetworkAvailable()) {
             getViewState().showNetworkIsNotAvailable();
             return;
         }
-        mModel.requestFreshData(artist, lang)
+        mModel.requestFreshData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        info -> getViewState().setInfo(info),
+                        artists -> getViewState().setData(artists),
                         error -> getViewState().handleError(error.getMessage()));
         getViewState().hideProgress();
     }

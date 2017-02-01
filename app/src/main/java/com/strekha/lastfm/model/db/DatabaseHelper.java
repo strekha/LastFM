@@ -1,7 +1,8 @@
-package com.strekha.lastfm.model;
+package com.strekha.lastfm.model.db;
+
+import com.strekha.lastfm.pojo.JsonObject;
 
 import io.realm.Realm;
-import rx.Observable;
 
 public class DatabaseHelper {
 
@@ -24,17 +25,16 @@ public class DatabaseHelper {
         realm.close();
     }
 
-    //Тут напутал с патоками работа с бд происходит в main thread.
-    public Observable<String> readJson(String tag){
-        Realm realm = Realm.getDefaultInstance();
-        final JsonObject[] jsonObject = new JsonObject[1];
-        realm.executeTransaction(realm1 -> {
-            jsonObject[0] = findInRealm(tag, realm1);
-            if (jsonObject[0] != null) jsonObject[0] = realm1.copyFromRealm(jsonObject[0]);
-        });
-        realm.close();
-        if (jsonObject[0] != null) return Observable.just(jsonObject[0].getJson());
-            else return Observable.just(null);
+    public String readJson(String tag){
+            Realm realm = Realm.getDefaultInstance();
+            final JsonObject[] jsonObject = new JsonObject[1];
+            realm.executeTransaction(realm1 -> {
+                jsonObject[0] = findInRealm(tag, realm1);
+                if (jsonObject[0] != null) jsonObject[0] = realm1.copyFromRealm(jsonObject[0]);
+            });
+            realm.close();
+            if (jsonObject[0] != null) return jsonObject[0].getJson();
+            else return null;
     }
 
     private JsonObject findInRealm(String tag, Realm realm){

@@ -1,4 +1,4 @@
-package com.strekha.lastfm.model;
+package com.strekha.lastfm.model.network;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

@@ -1,4 +1,4 @@
-package com.strekha.lastfm.model;
+package com.strekha.lastfm.pojo;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
