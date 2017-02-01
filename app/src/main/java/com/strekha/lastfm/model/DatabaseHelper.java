@@ -24,6 +24,7 @@ public class DatabaseHelper {
         realm.close();
     }
 
+    //Тут напутал с патоками работа с бд происходит в main thread.
     public Observable<String> readJson(String tag){
         Realm realm = Realm.getDefaultInstance();
         final JsonObject[] jsonObject = new JsonObject[1];

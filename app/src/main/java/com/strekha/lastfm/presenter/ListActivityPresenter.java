@@ -43,6 +43,8 @@ public class ListActivityPresenter extends MvpPresenter<ListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         jsonObject -> {
+                            //TODO зачем такие сложности это чисто бизнес если база пуста сразу дергай getFreshData.
+                            //А ещё лучше параметризуй это.
                             if (jsonObject == null) getViewState().updateData();
                             else getViewState().setData(JsonParser
                                     .parse(TopArtists.class, jsonObject)
