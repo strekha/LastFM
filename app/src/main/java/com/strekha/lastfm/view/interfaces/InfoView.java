@@ -3,7 +3,7 @@ package com.strekha.lastfm.view.interfaces;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.strekha.lastfm.pojo.info.Artist;
+import com.strekha.lastfm.entity.info.Artist;
 
 
 public interface InfoView extends MvpView {

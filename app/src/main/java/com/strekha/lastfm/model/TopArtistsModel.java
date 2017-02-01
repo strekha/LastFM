@@ -3,8 +3,8 @@ package com.strekha.lastfm.model;
 import com.strekha.lastfm.model.db.DatabaseHelper;
 import com.strekha.lastfm.model.deserialization.JsonParser;
 import com.strekha.lastfm.model.network.LastFM;
-import com.strekha.lastfm.pojo.top.Artist;
-import com.strekha.lastfm.pojo.top.TopArtists;
+import com.strekha.lastfm.entity.top.Artist;
+import com.strekha.lastfm.entity.top.TopArtists;
 
 import java.util.List;
 

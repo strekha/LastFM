@@ -1,6 +1,6 @@
 package com.strekha.lastfm.model.db;
 
-import com.strekha.lastfm.pojo.JsonObject;
+import com.strekha.lastfm.entity.JsonObject;
 
 import io.realm.Realm;
 

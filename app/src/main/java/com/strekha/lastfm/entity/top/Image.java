@@ -1,5 +1,5 @@
 
-package com.strekha.lastfm.pojo.top;
+package com.strekha.lastfm.entity.top;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

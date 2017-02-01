@@ -1,21 +1,17 @@
 package com.strekha.lastfm.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
-import com.strekha.lastfm.pojo.top.Artist;
+import com.strekha.lastfm.entity.top.Artist;
 import com.strekha.lastfm.presenter.TopArtistsListPresenter;
 import com.strekha.lastfm.view.interfaces.ListView;
 

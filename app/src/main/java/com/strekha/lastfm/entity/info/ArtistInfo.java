@@ -1,17 +1,18 @@
 
-package com.strekha.lastfm.pojo.top;
+package com.strekha.lastfm.entity.info;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Artists {
+public class ArtistInfo {
 
     @SerializedName("artist")
     @Expose
-    private List<Artist> artist = null;
+    private Artist artist;
 
-    public List<Artist> getArtist() {
+    public Artist getArtist() {
         return artist;
     }
+
+
 }

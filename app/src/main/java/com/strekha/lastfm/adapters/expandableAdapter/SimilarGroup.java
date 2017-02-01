@@ -1,6 +1,6 @@
 package com.strekha.lastfm.adapters.expandableAdapter;
 
-import com.strekha.lastfm.pojo.info.Artist;
+import com.strekha.lastfm.entity.info.Artist;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;

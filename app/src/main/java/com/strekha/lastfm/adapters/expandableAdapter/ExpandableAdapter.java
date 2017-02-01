@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.strekha.lastfm.pojo.info.Artist;
+import com.strekha.lastfm.entity.info.Artist;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ExpandableAdapter extends
         ExpandableRecyclerViewAdapter<SimilarViewHolder, SimilarArtistViewHolder> {
-
+//TODO naming code convention m, s, etc... check all files.
     private TopArtistAdapter.OnItemClickListener onItemClickListener;
 
     public ExpandableAdapter(List<? extends ExpandableGroup> groups) {

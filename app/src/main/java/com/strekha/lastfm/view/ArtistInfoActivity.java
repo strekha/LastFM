@@ -2,6 +2,7 @@ package com.strekha.lastfm.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Dimension;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +18,8 @@ import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
-import com.strekha.lastfm.pojo.info.Artist;
-import com.strekha.lastfm.pojo.info.Tag;
+import com.strekha.lastfm.entity.info.Artist;
+import com.strekha.lastfm.entity.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
@@ -126,7 +127,8 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
     private GridLayout.LayoutParams getParamsForTag(TextView textView){
         textView.setBackground(getResources().getDrawable(R.drawable.tag_background));
         textView.setPadding((int) getResources().getDimension(R.dimen.horizontal_tag_padding),
-                (int) getResources().getDimension(R.dimen.vertical_tag_padding),
+                //TODO how about to create method like this, instead of copy-paste.
+                getDimension(R.dimen.vertical_tag_padding),
                 (int) getResources().getDimension(R.dimen.horizontal_tag_padding),
                 (int) getResources().getDimension(R.dimen.vertical_tag_padding));
         textView.setTextColor(getResources().getColor(R.color.white));
@@ -136,6 +138,12 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
                 (int) getResources().getDimension(R.dimen.horizontal_tag_margin), 0);
         textView.setLayoutParams(params);
         return params;
+    }
+
+    //TODO better place for logic like this in som util class as example ViewUtils.getDimension(int resId)
+    @Dimension
+    private int getDimension(int resId) {
+        return (int) getResources().getDimension(resId);
     }
 
 }

@@ -39,6 +39,7 @@ public class SimilarViewHolder extends GroupViewHolder {
 
     private void animateExpand() {
         RotateAnimation rotate =
+                //TODO Use named constants instead of magic number.
                 new RotateAnimation(360, 180, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(300);
         rotate.setFillAfter(true);
