@@ -1,5 +1,9 @@
 package com.strekha.lastfm.model.network;
 
+import android.util.Log;
+
+import java.util.Locale;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -31,7 +35,9 @@ public class LastFM {
         return mApi.getTopArtists(API_KEY);
     }
 
-    public Observable<String> getArtistInfo(String artist, String lang) {
+    public Observable<String> getArtistInfo(String artist) {
+        String lang = Locale.getDefault().getLanguage();
+        Log.d("lang", lang);
         return mApi.getArtistInfo(artist, lang, API_KEY);
     }
 }

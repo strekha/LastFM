@@ -10,6 +10,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
+import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
 import com.strekha.lastfm.entity.top.Artist;
 import com.strekha.lastfm.presenter.TopArtistsListPresenter;
@@ -58,7 +59,7 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
 
     @Override
     public void handleError(String errorMessage) {
-        LastFmApplication.getInstance().makeToast(errorMessage);
+        UiUtils.showPopup(errorMessage);
     }
 
     @Override
@@ -74,6 +75,6 @@ public class ListActivity extends MvpAppCompatActivity implements ListView {
     @Override
     public void showNetworkIsNotAvailable() {
         hideProgress();
-        LastFmApplication.getInstance().makeToast(getString(R.string.network_is_not_available));
+        UiUtils.showPopup(getString(R.string.network_is_not_available));
     }
 }

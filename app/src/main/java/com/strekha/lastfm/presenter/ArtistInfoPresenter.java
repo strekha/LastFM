@@ -14,14 +14,14 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
 
     private ArtistInfoModel mModel = new ArtistInfoModel();
 
-    public void requestData(String artist, String lang) {
+    public void requestData(String artist) {
         getViewState().showProgress();
         mModel.requestCachedData(artist)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         info -> {
-                            if (info == null) requestFreshData(artist, lang);
+                            if (info == null) requestFreshData(artist);
                             else {
                                 getViewState().setInfo(info);
                                 getViewState().hideProgress();
@@ -32,12 +32,12 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
     }
 
 
-    public void requestFreshData(String artist, String lang) {
+    public void requestFreshData(String artist) {
         if (!NetworkChangeReceiver.isNetworkAvailable()) {
             getViewState().showNetworkIsNotAvailable();
             return;
         }
-        mModel.requestFreshData(artist, lang)
+        mModel.requestFreshData(artist)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

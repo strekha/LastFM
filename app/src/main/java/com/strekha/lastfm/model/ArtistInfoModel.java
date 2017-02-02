@@ -13,8 +13,8 @@ public class ArtistInfoModel {
 
     private LastFM mLastFM = LastFM.getInstance();
 
-    public Observable<Artist> requestFreshData(String artist, String lang) {
-        return mLastFM.getArtistInfo(artist, lang)
+    public Observable<Artist> requestFreshData(String artist) {
+        return mLastFM.getArtistInfo(artist)
                 .cache()
                 .retry(1)
                 .doOnNext(json -> DatabaseHelper.getInstance().writeJson(artist, json))

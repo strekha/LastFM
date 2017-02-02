@@ -21,9 +21,4 @@ public class LastFmApplication extends Application {
     public static LastFmApplication getInstance(){
         return sApplication;
     }
-
-    //TODO Good idea but wrong place, it's will be better to create new static class named like Popup.show(args); instead of code in application.
-    public void makeToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }

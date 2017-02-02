@@ -11,23 +11,23 @@ import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
 public class SimilarArtistViewHolder extends ChildViewHolder {
 
-    private TextView title;
-    private View view;
+    private TextView mTitle;
+    private View mView;
 
     private TopArtistAdapter.OnItemClickListener onItemClickListener;
 
-    public SimilarArtistViewHolder(View itemView) {
+    SimilarArtistViewHolder(View itemView) {
         super(itemView);
-        view = itemView;
-        title = (TextView) itemView.findViewById(R.id.similar_artists_child);
+        mView = itemView;
+        mTitle = (TextView) itemView.findViewById(R.id.similar_artists_child);
     }
 
-    public void onBind(Artist artist) {
-        title.setText(artist.getName());
-        view.setOnClickListener(v -> onItemClickListener.onItemClick(artist.getName()));
+    void onBind(Artist artist) {
+        mTitle.setText(artist.getName());
+        mView.setOnClickListener(v -> onItemClickListener.onItemClick(artist.getName()));
     }
 
-    public void setOnItemClickListener(TopArtistAdapter.OnItemClickListener onItemClickListener) {
+    void setOnItemClickListener(TopArtistAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 }

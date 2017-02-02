@@ -11,23 +11,30 @@ import com.strekha.lastfm.entity.top.Image;
 
 public class Artist implements Parcelable {
 
-    public static final int LARGE_COVER = 3;
-    @SerializedName("name")
+    private static final int LARGE_COVER = 3;
+    private static final String NAME = "name";
+    private static final String IMAGE = "image";
+    private static final String STATS = "stats";
+    private static final String SIMILAR = "similar";
+    private static final String TAGS = "tags";
+    private static final String BIO = "bio";
+
+    @SerializedName(NAME)
     @Expose
     private String name;
-    @SerializedName("image")
+    @SerializedName(IMAGE)
     @Expose
     private List<Image> image = null;
-    @SerializedName("stats")
+    @SerializedName(STATS)
     @Expose
     private Stats stats;
-    @SerializedName("similar")
+    @SerializedName(SIMILAR)
     @Expose
     private Similar similar;
-    @SerializedName("tags")
+    @SerializedName(TAGS)
     @Expose
     private Tags tags;
-    @SerializedName("bio")
+    @SerializedName(BIO)
     @Expose
     private Bio bio;
 
@@ -83,5 +90,26 @@ public class Artist implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Artist artist = (Artist) o;
+
+        if (name != null ? !name.equals(artist.name) : artist.name != null) return false;
+        if (stats != null ? !stats.equals(artist.stats) : artist.stats != null) return false;
+        return bio != null ? bio.equals(artist.bio) : artist.bio == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (stats != null ? stats.hashCode() : 0);
+        result = 31 * result + (bio != null ? bio.hashCode() : 0);
+        return result;
     }
 }

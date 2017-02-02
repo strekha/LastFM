@@ -5,12 +5,30 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Bio {
-//TODO Think about override equals and hashcode fo all entities this is a best practice.
-    @SerializedName("content")
+
+    private static final String CONTENT = "content";
+
+    @SerializedName(CONTENT)
     @Expose
     private String content;
 
-    public String getContent() {
+    String getContent() {
         return content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bio bio = (Bio) o;
+
+        return content != null ? content.equals(bio.content) : bio.content == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return content != null ? content.hashCode() : 0;
     }
 }

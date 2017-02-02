@@ -14,17 +14,21 @@ import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
 public class SimilarViewHolder extends GroupViewHolder {
 
-    private TextView title;
-    private ImageView arrow;
+    private static final int DURATION_MILLIS = 300;
+    private static final int FROM_DEGREES = 360;
+    private static final int TO_DEGREES = 180;
+    private static final float PIVOT_VALUE = 0.5f;
+    private TextView mTitle;
+    private ImageView mArrow;
 
-    public SimilarViewHolder(View itemView) {
+    SimilarViewHolder(View itemView) {
         super(itemView);
-        title = (TextView) itemView.findViewById(R.id.similar_title);
-        arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
+        mTitle = (TextView) itemView.findViewById(R.id.similar_title);
+        mArrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
     }
 
-    public void setTitle(ExpandableGroup group) {
-        title.setText(group.getTitle());
+    void setTitle(ExpandableGroup group) {
+        mTitle.setText(group.getTitle());
     }
 
     @Override
@@ -39,18 +43,17 @@ public class SimilarViewHolder extends GroupViewHolder {
 
     private void animateExpand() {
         RotateAnimation rotate =
-                //TODO Use named constants instead of magic number.
-                new RotateAnimation(360, 180, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(300);
+                new RotateAnimation(FROM_DEGREES, TO_DEGREES, RELATIVE_TO_SELF, PIVOT_VALUE, RELATIVE_TO_SELF, PIVOT_VALUE);
+        rotate.setDuration(DURATION_MILLIS);
         rotate.setFillAfter(true);
-        arrow.setAnimation(rotate);
+        mArrow.setAnimation(rotate);
     }
 
     private void animateCollapse() {
         RotateAnimation rotate =
-                new RotateAnimation(180, 360, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(300);
+                new RotateAnimation(TO_DEGREES, FROM_DEGREES, RELATIVE_TO_SELF, PIVOT_VALUE, RELATIVE_TO_SELF, PIVOT_VALUE);
+        rotate.setDuration(DURATION_MILLIS);
         rotate.setFillAfter(true);
-        arrow.setAnimation(rotate);
+        mArrow.setAnimation(rotate);
     }
 }

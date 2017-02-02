@@ -19,7 +19,7 @@ public class ArtistViewHolder extends RecyclerView.ViewHolder {
     private TextView mName;
     private TextView mPlaycounts;
 
-    public ArtistViewHolder(CardView itemView) {
+    ArtistViewHolder(CardView itemView) {
         super(itemView);
         mCard = itemView;
         mListeners = (TextView) itemView.findViewById(R.id.listeners_card);
@@ -28,14 +28,14 @@ public class ArtistViewHolder extends RecyclerView.ViewHolder {
         mImage = (SimpleDraweeView) itemView.findViewById(R.id.artist_image_card);
     }
 
-    public void setData(Artist artist){
+    void setData(Artist artist){
         mName.setText(artist.getName());
         mPlaycounts.setText(artist.getPlaycount());
         mListeners.setText(artist.getListeners());
         mImage.setImageURI(artist.getImages().get(PREVIEW).getUri());
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener){
+    void setOnClickListener(View.OnClickListener onClickListener){
         mCard.setOnClickListener(onClickListener);
     }
 

@@ -1,9 +1,7 @@
 <resources>
-    <!-- TODO do not mix different localization languages -->
     <string name="app_name">Lastfm</string>
     <string name="playcount">Прослушиваний:</string>
     <string name="listeners">Слушателей:</string>
     <string name="similar">Похожие исполнители</string>
-    <string name="lang">ru</string>
     <string name="network_is_not_available">Нет подключения к сети.</string>
 </resources>

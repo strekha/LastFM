@@ -14,8 +14,8 @@ import java.util.List;
 
 public class ExpandableAdapter extends
         ExpandableRecyclerViewAdapter<SimilarViewHolder, SimilarArtistViewHolder> {
-//TODO naming code convention m, s, etc... check all files.
-    private TopArtistAdapter.OnItemClickListener onItemClickListener;
+
+    private TopArtistAdapter.OnItemClickListener mOnItemClickListener;
 
     public ExpandableAdapter(List<? extends ExpandableGroup> groups) {
         super(groups);
@@ -39,7 +39,7 @@ public class ExpandableAdapter extends
     public void onBindChildViewHolder(SimilarArtistViewHolder holder, int flatPosition,
                                       ExpandableGroup group, int childIndex) {
         final Artist artist = (Artist) group.getItems().get(childIndex);
-        holder.setOnItemClickListener(onItemClickListener);
+        holder.setOnItemClickListener(mOnItemClickListener);
         holder.onBind(artist);
     }
 
@@ -50,6 +50,6 @@ public class ExpandableAdapter extends
     }
 
     public void setOnItemClickListener(TopArtistAdapter.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+        this.mOnItemClickListener = onItemClickListener;
     }
 }

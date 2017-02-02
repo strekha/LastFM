@@ -7,12 +7,29 @@ import com.google.gson.annotations.SerializedName;
 
 public class Tags {
 
-    @SerializedName("tag")
+    private static final String TAG = "tag";
+
+    @SerializedName(TAG)
     @Expose
     private List<Tag> tag = null;
 
-    public List<Tag> getTag() {
+    List<Tag> getTag() {
         return tag;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tags tags = (Tags) o;
+
+        return tag != null ? tag.equals(tags.tag) : tags.tag == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return tag != null ? tag.hashCode() : 0;
+    }
 }

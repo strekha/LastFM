@@ -6,9 +6,11 @@ import android.support.annotation.Dimension;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -16,6 +18,7 @@ import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
+import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
 import com.strekha.lastfm.entity.info.Artist;
@@ -26,8 +29,6 @@ import com.strekha.lastfm.view.interfaces.InfoView;
 import java.util.Collections;
 
 public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {
-
-    private static String LANG;
 
     @InjectPresenter
     public ArtistInfoPresenter mPresenter;
@@ -40,15 +41,14 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_info);
         mArtistTitle = getIntent().getStringExtra(ListActivity.ARTIST_TITLE);
-        LANG = getString(R.string.lang);
 
         getSupportActionBar().setTitle(mArtistTitle);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData(mArtistTitle, LANG));
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData(mArtistTitle));
 
-        mPresenter.requestData(mArtistTitle, LANG);
+        mPresenter.requestData(mArtistTitle);
     }
 
 
@@ -93,7 +93,7 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
 
     @Override
     public void handleError(String errorMessage) {
-        LastFmApplication.getInstance().makeToast(errorMessage);
+        UiUtils.showPopup(errorMessage);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
     @Override
     public void showNetworkIsNotAvailable() {
         hideProgress();
-        LastFmApplication.getInstance().makeToast(getString(R.string.network_is_not_available));
+        UiUtils.showPopup(getString(R.string.network_is_not_available));
     }
 
     private void startInfoActivity(String artist) {
@@ -126,24 +126,17 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
 
     private GridLayout.LayoutParams getParamsForTag(TextView textView){
         textView.setBackground(getResources().getDrawable(R.drawable.tag_background));
-        textView.setPadding((int) getResources().getDimension(R.dimen.horizontal_tag_padding),
-                //TODO how about to create method like this, instead of copy-paste.
-                getDimension(R.dimen.vertical_tag_padding),
-                (int) getResources().getDimension(R.dimen.horizontal_tag_padding),
-                (int) getResources().getDimension(R.dimen.vertical_tag_padding));
-        textView.setTextColor(getResources().getColor(R.color.white));
+        textView.setPadding(UiUtils.getDimension(R.dimen.horizontal_tag_padding),
+                UiUtils.getDimension(R.dimen.vertical_tag_padding),
+                UiUtils.getDimension(R.dimen.horizontal_tag_padding),
+                UiUtils.getDimension(R.dimen.vertical_tag_padding));
+        textView.setTextColor(UiUtils.getColor(R.color.white));
         GridLayout.LayoutParams params =
                 new GridLayout.LayoutParams();
-        params.setMargins(0, (int) getResources().getDimension(R.dimen.vertical_tag_margin),
-                (int) getResources().getDimension(R.dimen.horizontal_tag_margin), 0);
+        params.setMargins(0, UiUtils.getDimension(R.dimen.vertical_tag_margin),
+                UiUtils.getDimension(R.dimen.horizontal_tag_margin), 0);
         textView.setLayoutParams(params);
         return params;
-    }
-
-    //TODO better place for logic like this in som util class as example ViewUtils.getDimension(int resId)
-    @Dimension
-    private int getDimension(int resId) {
-        return (int) getResources().getDimension(resId);
     }
 
 }
