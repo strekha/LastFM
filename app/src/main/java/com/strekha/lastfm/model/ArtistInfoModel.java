@@ -24,18 +24,14 @@ public class ArtistInfoModel {
     }
 
     public Observable<Artist> requestCachedData(String artist) {
-
         return Observable.fromCallable(() ->
         {
             String json = DatabaseHelper.getInstance().readJson(artist);
-            //TODO use ternary operator instead of if/else block. or Optional; see below...
-//            Optional.ofNullable(json).map(this::getArtist).orElse(null);
-            if (json == null) return null;
-            return JsonParser.parse(ArtistInfo.class, json).getArtist();
+            return json != null ? getArtist(json) : null;
         });
     }
 
-//    private Artist getArtist(String j) {
-//        return JsonParser.parse(ArtistInfo.class, j).getArtist();
-//    }
+    private Artist getArtist(String j) {
+        return JsonParser.parse(ArtistInfo.class, j).getArtist();
+    }
 }
