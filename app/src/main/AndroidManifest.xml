@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".view.ListActivity"
+            android:name=".view.ListActivity_"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ArtistInfoActivity"
-            android:parentActivityName=".view.ListActivity"/>
+        <activity android:name=".view.ArtistInfoActivity_"
+            android:parentActivityName=".view.ListActivity_"/>
     </application>
 
 </manifest>

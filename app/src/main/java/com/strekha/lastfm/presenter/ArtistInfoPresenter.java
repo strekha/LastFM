@@ -1,23 +1,30 @@
 package com.strekha.lastfm.presenter;
 
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.strekha.lastfm.entity.info.Artist;
 import com.strekha.lastfm.model.ArtistInfoModel;
 import com.strekha.lastfm.model.network.NetworkChangeReceiver;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-@InjectViewState
-public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
+@EBean
+public class ArtistInfoPresenter{
 
-    private ArtistInfoModel mModel = new ArtistInfoModel();
+    @Bean
+    ArtistInfoModel mModel;
+    private InfoView mView;
+    private Subscription mCachedDataSubscription;
+    private Subscription mFreshDataSubscription;
 
     public void requestData(String artist) {
         getViewState().showProgress();
-        mModel.requestCachedData(artist)
+        mCachedDataSubscription = mModel
+                .requestCachedData(artist)
                 .filter(info -> info != null)
                 .switchIfEmpty(mModel.requestFreshData(artist))
                 .subscribeOn(Schedulers.io())
@@ -27,7 +34,9 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
 
 
     public void requestFreshData(String artist) {
-        mModel.requestFreshData(artist)
+        unsubscribe(mFreshDataSubscription);
+        mFreshDataSubscription = mModel
+                .requestFreshData(artist)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setData, this::handleError);
@@ -42,5 +51,23 @@ public class ArtistInfoPresenter extends MvpPresenter<InfoView> {
         if (!NetworkChangeReceiver.isNetworkAvailable())
             getViewState().showNetworkIsNotAvailable();
         else getViewState().handleError(error.getMessage());
+    }
+
+    private InfoView getViewState() {
+        return mView;
+    }
+
+    public void setViewState(InfoView view) {
+        mView = view;
+    }
+
+    public void onDestroyView() {
+        unsubscribe(mCachedDataSubscription);
+        unsubscribe(mFreshDataSubscription);
+    }
+
+    private void unsubscribe(Subscription subscription){
+        if (subscription != null && !subscription.isUnsubscribed())
+            subscription.unsubscribe();
     }
 }

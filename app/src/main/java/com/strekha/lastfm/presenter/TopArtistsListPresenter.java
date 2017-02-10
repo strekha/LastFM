@@ -1,25 +1,32 @@
 package com.strekha.lastfm.presenter;
 
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.strekha.lastfm.entity.top.Artist;
 import com.strekha.lastfm.model.TopArtistsModel;
 import com.strekha.lastfm.model.network.NetworkChangeReceiver;
 import com.strekha.lastfm.view.interfaces.ListView;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
 import java.util.List;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-@InjectViewState
-public class TopArtistsListPresenter extends MvpPresenter<ListView> {
+@EBean
+public class TopArtistsListPresenter {
 
-    private TopArtistsModel mModel = new TopArtistsModel();
+    @Bean
+    TopArtistsModel mModel;
+    private ListView mView;
+    private Subscription mCachedDataSubscription;
+    private Subscription mFreshDataSubscription;
 
     public void requestData() {
         getViewState().showProgress();
-        mModel.requestCachedData()
+        mCachedDataSubscription = mModel
+                .requestCachedData()
                 .filter(list -> list != null)
                 .switchIfEmpty(mModel.requestFreshData())
                 .subscribeOn(Schedulers.io())
@@ -29,20 +36,40 @@ public class TopArtistsListPresenter extends MvpPresenter<ListView> {
 
 
     public void requestFreshData() {
-        mModel.requestFreshData()
+        unsubscribe(mFreshDataSubscription);
+        mFreshDataSubscription = mModel
+                .requestFreshData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setData, this::handleError);
     }
 
-    private void setData(List<Artist> artists){
+    private void setData(List<Artist> artists) {
         getViewState().setData(artists);
         getViewState().hideProgress();
     }
 
-    private void handleError(Throwable error){
+    private void handleError(Throwable error) {
         if (!NetworkChangeReceiver.isNetworkAvailable())
             getViewState().showNetworkIsNotAvailable();
         else getViewState().handleError(error.getMessage());
+    }
+
+    private ListView getViewState() {
+        return mView;
+    }
+
+    public void setViewState(ListView view) {
+        mView = view;
+    }
+
+    public void onDestroyView() {
+        unsubscribe(mCachedDataSubscription);
+        unsubscribe(mFreshDataSubscription);
+    }
+
+    private void unsubscribe(Subscription subscription){
+        if (subscription != null && !subscription.isUnsubscribed())
+            subscription.unsubscribe();
     }
 }

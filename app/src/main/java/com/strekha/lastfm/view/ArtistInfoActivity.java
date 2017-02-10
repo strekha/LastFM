@@ -1,22 +1,15 @@
 package com.strekha.lastfm.view;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Dimension;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
@@ -26,37 +19,44 @@ import com.strekha.lastfm.entity.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
+import org.androidannotations.annotations.AfterExtras;
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.Collections;
 
-public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView {
+@EActivity(R.layout.activity_artist_info)
+public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
-    @InjectPresenter
-    public ArtistInfoPresenter mPresenter;
-    private GridLayout mTagsLayout;
-    private String mArtistTitle;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bean                               ArtistInfoPresenter mPresenter;
+    @ViewById(R.id.tags)                GridLayout mTagsLayout;
+    @ViewById(R.id.swipe_refresh)       SwipeRefreshLayout mSwipeRefreshLayout;
+    @Extra(ListActivity.ARTIST_TITLE)   String mArtistTitle;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_artist_info);
-        mArtistTitle = getIntent().getStringExtra(ListActivity.ARTIST_TITLE);
 
+    @AfterInject
+    void afterInject(){
+        mPresenter.setViewState(this);
+    }
+
+    @AfterExtras
+    void afterExtras(){
         getSupportActionBar().setTitle(mArtistTitle);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+    @AfterViews
+    void afterViews(){
         mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.requestFreshData(mArtistTitle));
-
         mPresenter.requestData(mArtistTitle);
     }
 
-
-
     @Override
     public void setInfo(Artist artistInfo) {
-
-        mTagsLayout = (GridLayout) findViewById(R.id.tags);
 
         TextView listeners = (TextView) findViewById(R.id.listeners);
         TextView playcount = (TextView) findViewById(R.id.playcount);
@@ -85,7 +85,10 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
                 new SimilarGroup(getResources().getString(R.string.similar),
                         artistInfo.getSimilar())));
 
-        adapter.setOnItemClickListener(this::startInfoActivity);
+        adapter.setOnItemClickListener(artist -> ArtistInfoActivity_
+                .intent(this)
+                .extra(ListActivity.ARTIST_TITLE, artist)
+                .start());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -112,11 +115,6 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         UiUtils.showPopup(getString(R.string.network_is_not_available));
     }
 
-    private void startInfoActivity(String artist) {
-        Intent intent = new Intent(this, ArtistInfoActivity.class);
-        intent.putExtra(ListActivity.ARTIST_TITLE, artist);
-        startActivity(intent);
-    }
 
     private void addTag(String tag){
         TextView newTag = new TextView(this);
@@ -139,4 +137,9 @@ public class ArtistInfoActivity extends MvpAppCompatActivity implements InfoView
         return params;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroyView();
+    }
 }

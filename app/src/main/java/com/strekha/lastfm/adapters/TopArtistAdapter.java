@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.entity.top.Artist;
 
+import org.androidannotations.annotations.EBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@EBean
 public class TopArtistAdapter extends RecyclerView.Adapter<ArtistViewHolder> {
 
     private List<Artist> mTopArtists = new ArrayList<>();

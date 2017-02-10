@@ -2,18 +2,12 @@ package com.strekha.lastfm.model.db;
 
 import com.strekha.lastfm.entity.JsonObject;
 
+import org.androidannotations.annotations.EBean;
+
 import io.realm.Realm;
 
+@EBean(scope = EBean.Scope.Singleton)
 public class DatabaseHelper {
-
-    private static DatabaseHelper mHelper;
-
-    private DatabaseHelper(){}
-
-    public static DatabaseHelper getInstance(){
-        if(mHelper == null) mHelper = new DatabaseHelper();
-        return mHelper;
-    }
 
     public void writeJson(String tag, String json){
         Realm realm = Realm.getDefaultInstance();
