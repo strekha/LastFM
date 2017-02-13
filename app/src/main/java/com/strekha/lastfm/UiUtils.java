@@ -14,7 +14,7 @@ public class UiUtils {
         return (int) LastFmApplication.getInstance().getResources().getDimension(resId);
     }
 
-    @ColorInt
+    @ColorInt//TODO better return  the ColorStateList because of selectors.
     public static int getColor(@ColorRes int color){
         return LastFmApplication.getInstance().getResources().getColor(color);
     }
