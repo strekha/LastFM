@@ -58,6 +58,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
     @Override
     public void setInfo(Artist artistInfo) {
 
+        //TODO Why do you create this variables every time when you set content? Maybe it would be better to use @ViewById for this views too?
         TextView listeners = (TextView) findViewById(R.id.listeners);
         TextView playcount = (TextView) findViewById(R.id.playcount);
         TextView bio = (TextView) findViewById(R.id.bio);
@@ -81,6 +82,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
             addTag(tag.getName());
         }
 
+        //TODO Why instance of adapter created every time? Maybe setter?
         ExpandableAdapter adapter = new ExpandableAdapter(Collections.singletonList(
                 new SimilarGroup(getResources().getString(R.string.similar),
                         artistInfo.getSimilar())));
@@ -94,6 +96,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
         recyclerView.setAdapter(adapter);
     }
 
+    //TODO Are all errors handled only this way? If no, than view only can provide intefrace with methods such showPopup, showDialog... and presenter decide what use by himself
     @Override
     public void handleError(String errorMessage) {
         UiUtils.showPopup(errorMessage);

@@ -50,6 +50,7 @@ public class TopArtistsListPresenter {
     }
 
     private void handleError(Throwable error) {
+        //TODO see android code style https://source.android.com/source/code-style.html. Part "Use Standard Brace Style (about if)"
         if (!NetworkChangeReceiver.isNetworkAvailable())
             getViewState().showNetworkIsNotAvailable();
         else getViewState().handleError(error.getMessage());
