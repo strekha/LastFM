@@ -125,6 +125,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
         mTagsLayout.addView(newTag, getParamsForTag(newTag));
     }
 
+    //TODO What are you think about widget like "TagWidget" where will be encapsulated this logic?
     private GridLayout.LayoutParams getParamsForTag(TextView textView){
         textView.setBackground(getResources().getDrawable(R.drawable.tag_background));
         textView.setPadding(UiUtils.getDimension(R.dimen.horizontal_tag_padding),
