@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.drawable.ProgressBarDrawable;
@@ -14,8 +13,8 @@ import com.strekha.lastfm.R;
 import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
 import com.strekha.lastfm.adapters.expandableAdapter.SimilarGroup;
+import com.strekha.lastfm.custom_views.TagWidget;
 import com.strekha.lastfm.entity.info.Artist;
-import com.strekha.lastfm.entity.info.Tag;
 import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
@@ -33,8 +32,13 @@ import java.util.Collections;
 public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
     @Bean                               ArtistInfoPresenter mPresenter;
-    @ViewById(R.id.tags)                GridLayout mTagsLayout;
+    @ViewById(R.id.tags)                TagWidget mTagsLayout;
     @ViewById(R.id.swipe_refresh)       SwipeRefreshLayout mSwipeRefreshLayout;
+    @ViewById(R.id.listeners)           TextView mListeners;
+    @ViewById(R.id.playcount)           TextView mPlaycount;
+    @ViewById(R.id.bio)                 TextView mBio;
+    @ViewById(R.id.artist_cover)        SimpleDraweeView mCover;
+    @ViewById(R.id.similar_artists)     RecyclerView mSimilarArtists;
     @Extra(ListActivity.ARTIST_TITLE)   String mArtistTitle;
 
 
@@ -46,7 +50,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
     @AfterExtras
     void afterExtras(){
         getSupportActionBar().setTitle(mArtistTitle);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @AfterViews
@@ -58,31 +62,23 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
     @Override
     public void setInfo(Artist artistInfo) {
 
-        //TODO Why do you create this variables every time when you set content? Maybe it would be better to use @ViewById for this views too?
-        TextView listeners = (TextView) findViewById(R.id.listeners);
-        TextView playcount = (TextView) findViewById(R.id.playcount);
-        TextView bio = (TextView) findViewById(R.id.bio);
-        SimpleDraweeView image = (SimpleDraweeView) findViewById(R.id.artist_cover);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.similar_artists);
-
         findViewById(R.id.playcount_label).setVisibility(View.VISIBLE);
         findViewById(R.id.listeners_label).setVisibility(View.VISIBLE);
 
-        listeners.setText(artistInfo.getListeners());
-        playcount.setText(artistInfo.getPlaycount());
-        image.setImageURI(artistInfo.getCoverUri());
-        image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
+        mListeners.setText(artistInfo.getListeners());
+        mPlaycount.setText(artistInfo.getPlaycount());
+        mCover.setImageURI(artistInfo.getCoverUri());
+        mCover.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
 
         String biography = artistInfo.getFullBio();
         biography = biography.substring(0, biography.lastIndexOf("<a href"));
-        bio.setText(biography);
+        mBio.setText(biography);
 
-        mTagsLayout.removeAllViews();
-        for (Tag tag : artistInfo.getTags()){
-            addTag(tag.getName());
-        }
+        mTagsLayout.setTags(artistInfo.getTags());
 
         //TODO Why instance of adapter created every time? Maybe setter?
+        //because ExpandableAdapter superclass has not constructor without parameters.
+        //and I cant inject adapter when activity created.
         ExpandableAdapter adapter = new ExpandableAdapter(Collections.singletonList(
                 new SimilarGroup(getResources().getString(R.string.similar),
                         artistInfo.getSimilar())));
@@ -92,13 +88,12 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
                 .extra(ListActivity.ARTIST_TITLE, artist)
                 .start());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        mSimilarArtists.setLayoutManager(new LinearLayoutManager(this));
+        mSimilarArtists.setAdapter(adapter);
     }
 
-    //TODO Are all errors handled only this way? If no, than view only can provide intefrace with methods such showPopup, showDialog... and presenter decide what use by himself
     @Override
-    public void handleError(String errorMessage) {
+    public void showErrorMessage(String errorMessage) {
         UiUtils.showPopup(errorMessage);
     }
 
@@ -116,29 +111,6 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
     public void showNetworkIsNotAvailable() {
         hideProgress();
         UiUtils.showPopup(getString(R.string.network_is_not_available));
-    }
-
-
-    private void addTag(String tag){
-        TextView newTag = new TextView(this);
-        newTag.setText(tag);
-        mTagsLayout.addView(newTag, getParamsForTag(newTag));
-    }
-
-    //TODO What are you think about widget like "TagWidget" where will be encapsulated this logic?
-    private GridLayout.LayoutParams getParamsForTag(TextView textView){
-        textView.setBackground(getResources().getDrawable(R.drawable.tag_background));
-        textView.setPadding(UiUtils.getDimension(R.dimen.horizontal_tag_padding),
-                UiUtils.getDimension(R.dimen.vertical_tag_padding),
-                UiUtils.getDimension(R.dimen.horizontal_tag_padding),
-                UiUtils.getDimension(R.dimen.vertical_tag_padding));
-        textView.setTextColor(UiUtils.getColor(R.color.white));
-        GridLayout.LayoutParams params =
-                new GridLayout.LayoutParams();
-        params.setMargins(0, UiUtils.getDimension(R.dimen.vertical_tag_margin),
-                UiUtils.getDimension(R.dimen.horizontal_tag_margin), 0);
-        textView.setLayoutParams(params);
-        return params;
     }
 
     @Override

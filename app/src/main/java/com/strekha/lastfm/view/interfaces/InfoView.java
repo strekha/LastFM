@@ -1,25 +1,17 @@
 package com.strekha.lastfm.view.interfaces;
 
-import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.strekha.lastfm.entity.info.Artist;
 
 
-public interface InfoView extends MvpView {
+public interface InfoView{
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void setInfo(Artist artist);
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
-    void handleError(String errorMessage);
+    void showErrorMessage(String errorMessage);
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void showProgress();
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void hideProgress();
 
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void showNetworkIsNotAvailable();
 }

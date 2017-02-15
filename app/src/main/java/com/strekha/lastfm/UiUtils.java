@@ -1,10 +1,14 @@
 package com.strekha.lastfm;
 
 
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.Dimension;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 public class UiUtils {
@@ -14,9 +18,8 @@ public class UiUtils {
         return (int) LastFmApplication.getInstance().getResources().getDimension(resId);
     }
 
-    @ColorInt//TODO better return  the ColorStateList because of selectors.
-    public static int getColor(@ColorRes int color){
-        return LastFmApplication.getInstance().getResources().getColor(color);
+    public static ColorStateList getColorStateList(@ColorRes int colorStateList){
+        return ContextCompat.getColorStateList(LastFmApplication.getInstance(), colorStateList);
     }
 
     public static void showPopup(String message){

@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:scrollbars="none">
 
-                    <GridLayout
+                    <com.strekha.lastfm.custom_views.TagWidget
                         android:id="@+id/tags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

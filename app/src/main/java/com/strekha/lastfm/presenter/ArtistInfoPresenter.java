@@ -50,7 +50,7 @@ public class ArtistInfoPresenter{
     private void handleError(Throwable error){
         if (!NetworkChangeReceiver.isNetworkAvailable())
             getViewState().showNetworkIsNotAvailable();
-        else getViewState().handleError(error.getMessage());
+        else getViewState().showErrorMessage(error.getMessage());
     }
 
     private InfoView getViewState() {
