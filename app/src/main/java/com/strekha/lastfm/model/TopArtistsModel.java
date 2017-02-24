@@ -13,20 +13,24 @@ import java.util.List;
 
 import rx.Observable;
 
-@EBean
 public class TopArtistsModel {
 
-    private static final String TOP_ARTISTS_TAG = "top_artist_tag";
+    public static final String TOP_ARTISTS_TAG = "top_artist_tag";
 
-    @Bean LastFM mLastFM;
-    @Bean DatabaseHelper mDatabase;
+    private LastFM mLastFM;
+    private DatabaseHelper mDatabase;
+
+    public TopArtistsModel(LastFM lastFM, DatabaseHelper database) {
+        mLastFM = lastFM;
+        mDatabase = database;
+    }
 
     public Observable<List<Artist>> requestFreshData() {
             return mLastFM.getTopArtists()
                     .cache()
                     .retry(1)
                     .doOnNext(json -> mDatabase.writeJson(TopArtistsModel.TOP_ARTISTS_TAG, json))
-                    .map(json -> JsonParser.parse(TopArtists.class, json).getArtists());
+                    .map(this::getArtist);
     }
 
     public Observable<List<Artist>> requestCachedData() {

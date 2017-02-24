@@ -14,14 +14,16 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-@EBean
 public class TopArtistsListPresenter {
 
-    @Bean
-    TopArtistsModel mModel;
+    private TopArtistsModel mModel;
     private ListView mView;
     private Subscription mCachedDataSubscription;
     private Subscription mFreshDataSubscription;
+
+    public TopArtistsListPresenter(TopArtistsModel model){
+        mModel = model;
+    }
 
     public void requestData() {
         getViewState().showProgress();

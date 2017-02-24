@@ -1,7 +1,5 @@
 package com.strekha.lastfm.model.network;
 
-import android.util.Log;
-
 import org.androidannotations.annotations.EBean;
 
 import java.util.Locale;
@@ -19,7 +17,7 @@ public class LastFM {
 
     private LastFMApi mApi;
 
-    LastFM() {
+    public LastFM() {
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -34,7 +32,6 @@ public class LastFM {
 
     public Observable<String> getArtistInfo(String artist) {
         String lang = Locale.getDefault().getLanguage();
-        Log.d("lang", lang);
         return mApi.getArtistInfo(artist, lang, API_KEY);
     }
 }

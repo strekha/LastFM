@@ -1,11 +1,13 @@
 package com.strekha.lastfm.view;
 
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.TopArtistAdapter;
@@ -21,12 +23,14 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 @EActivity(R.layout.activity_top_list)
 public class ListActivity extends AppCompatActivity implements ListView {
 
     public static final String ARTIST_TITLE = "title";
 
-    @Bean                           TopArtistsListPresenter mPresenter;
+    @Inject                         TopArtistsListPresenter mPresenter;
     @Bean                           TopArtistAdapter mAdapter;
     @ViewById(R.id.swipe_refresh)   SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewById(R.id.recycleView)     RecyclerView mRecyclerView;
@@ -35,11 +39,7 @@ public class ListActivity extends AppCompatActivity implements ListView {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-
-    }
-
-    @AfterInject
-    void afterInject(){
+        ((LastFmApplication) getApplication()).getAppComponent().inject(this);
         mPresenter.setViewState(this);
     }
 
