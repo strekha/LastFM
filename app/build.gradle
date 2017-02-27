@@ -24,27 +24,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-//buildScript scope block must be in root build.gradle file instead of app build.gradle
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
-    }
-}
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "io.realm:realm-gradle-plugin:2.1.0"
-    }
-}
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')//useless dependency, you do not have any *.jar and even libs directory.
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
