@@ -1,5 +1,13 @@
 package com.strekha.lastfm.model;
 
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.List;
+
 import com.strekha.lastfm.entity.top.Artist;
 import com.strekha.lastfm.entity.top.TopArtists;
 import com.strekha.lastfm.model.db.DatabaseHelper;
@@ -16,16 +24,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.Collections;
-import java.util.List;
-
 import rx.Observable;
 import rx.observers.TestSubscriber;
-
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(JsonParser.class)
@@ -34,6 +34,8 @@ public class TopArtistModelTest {
     @Mock        DatabaseHelper mDatabase;
     @Mock        LastFM mServiceApi;
     @Mock        TopArtists mArtists;
+
+    //TODO LM: nice approach, no need for dagger at all!
     @InjectMocks TopArtistsModel mModel;
 
     @Before
