@@ -1,5 +1,12 @@
 package com.strekha.lastfm.presenter;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.strekha.lastfm.BuildConfig;
 import com.strekha.lastfm.LastFmAppTest;
 import com.strekha.lastfm.entity.top.Artist;
@@ -16,14 +23,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Observable;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, application = LastFmAppTest.class)
@@ -48,6 +48,7 @@ public class TopArtistPresenterTest {
         when(mModel.requestFreshData()).thenReturn(Observable.just(artists));
     }
 
+    //FIXME LM: method naming if confusing. See variants https://dzone.com/articles/7-popular-unit-test-naming
     @Test
     public void verify_requestCachedData() {
         when(mModel.requestCachedData()).thenReturn(Observable.empty());
@@ -57,6 +58,8 @@ public class TopArtistPresenterTest {
 
     @Test
     public void requestFreshData_shouldBeCalled_whenCacheIsEmpty() {
+        //FIXME LM: don't return empty, cause your method return null if cache is empty
+        //                                          use Observable.just(null) instead
         when(mModel.requestCachedData()).thenReturn(Observable.empty());
         mPresenter.requestData();
         verify(mModel).requestFreshData();
