@@ -48,31 +48,28 @@ public class TopArtistPresenterTest {
         when(mModel.requestFreshData()).thenReturn(Observable.just(artists));
     }
 
-    //FIXME LM: method naming if confusing. See variants https://dzone.com/articles/7-popular-unit-test-naming
     @Test
-    public void verify_requestCachedData() {
+    public void should_requestCachedData_when_requestData() {
         when(mModel.requestCachedData()).thenReturn(Observable.empty());
         mPresenter.requestData();
         verify(mModel).requestCachedData();
     }
 
     @Test
-    public void requestFreshData_shouldBeCalled_whenCacheIsEmpty() {
-        //FIXME LM: don't return empty, cause your method return null if cache is empty
-        //                                          use Observable.just(null) instead
-        when(mModel.requestCachedData()).thenReturn(Observable.empty());
+    public void should_requestFreshData_when_CacheIsEmpty() {
+        when(mModel.requestCachedData()).thenReturn(Observable.just(null));
         mPresenter.requestData();
         verify(mModel).requestFreshData();
     }
 
     @Test
-    public void requestFreshData_shouldBeCalled_whenViewRequestFreshData() {
+    public void should_requestFreshData_when_viewRequestFreshData() {
         mPresenter.requestFreshData();
         verify(mModel).requestFreshData();
     }
 
     @Test
-    public void verify_setData_whenRequestData() {
+    public void should_setData_when_RequestData() {
         when(mModel.requestCachedData()).thenReturn(Observable.empty());
 
         mPresenter.requestData();
@@ -83,7 +80,7 @@ public class TopArtistPresenterTest {
     }
 
     @Test
-    public void shouldShowErrorMessage_whenModelThrowException() {
+    public void should_showErrorMessage_when_modelThrowException() {
         String errorMessage = "some error here";
         when(mModel.requestFreshData()).thenReturn(Observable.error(new Throwable(errorMessage)));
         mPresenter.requestFreshData();

@@ -35,7 +35,6 @@ public class TopArtistModelTest {
     @Mock        LastFM mServiceApi;
     @Mock        TopArtists mArtists;
 
-    //TODO LM: nice approach, no need for dagger at all!
     @InjectMocks TopArtistsModel mModel;
 
     @Before
@@ -47,7 +46,7 @@ public class TopArtistModelTest {
     }
 
     @Test
-    public void verify_writeJson_whenRequestFromApi() {
+    public void should_writeJson_when_RequestFromApi() {
         String json = "some json here";
         TestSubscriber<List<Artist>> testSubscriber = new TestSubscriber<>();
 
@@ -61,7 +60,7 @@ public class TopArtistModelTest {
     }
 
     @Test
-    public void assertNull_whenCacheIsEmpty(){
+    public void should_receiveNull_when_CacheIsEmpty(){
         TestSubscriber<List<Artist>> testSubscriber = new TestSubscriber<>();
 
         when(mDatabase.readJson(anyString())).thenReturn(null);
@@ -71,7 +70,7 @@ public class TopArtistModelTest {
     }
 
     @Test
-    public void assertSomeValues_whenCacheIsNotEmpty(){
+    public void should_receiveSomeValue_when_CacheIsNotEmpty(){
         TestSubscriber<List<Artist>> testSubscriber = new TestSubscriber<>();
         when(mDatabase.readJson(anyString())).thenReturn(anyString());
         mModel.requestCachedData().subscribe(testSubscriber);
@@ -80,7 +79,7 @@ public class TopArtistModelTest {
     }
 
     @Test
-    public void assertNull_fromApiRequest(){
+    public void should_receiveException_when_apiEmitError(){
         String errorMessage = "some error here";
         TestSubscriber<List<Artist>> testSubscriber = new TestSubscriber<>();
         Throwable error = new Throwable(errorMessage);
