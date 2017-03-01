@@ -1,5 +1,7 @@
 package com.strekha.lastfm.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.strekha.lastfm.LastFmApplication;
 import com.strekha.lastfm.R;
 import com.strekha.lastfm.UiUtils;
 import com.strekha.lastfm.adapters.expandableAdapter.ExpandableAdapter;
@@ -19,19 +22,19 @@ import com.strekha.lastfm.presenter.ArtistInfoPresenter;
 import com.strekha.lastfm.view.interfaces.InfoView;
 
 import org.androidannotations.annotations.AfterExtras;
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 @EActivity(R.layout.activity_artist_info)
 public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
 
-    @Bean                               ArtistInfoPresenter mPresenter;
+    @Inject                             ArtistInfoPresenter mPresenter;
     @ViewById(R.id.tags)                TagWidget mTagsLayout;
     @ViewById(R.id.swipe_refresh)       SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewById(R.id.listeners)           TextView mListeners;
@@ -42,8 +45,10 @@ public class ArtistInfoActivity extends AppCompatActivity implements InfoView {
     @Extra(ListActivity.ARTIST_TITLE)   String mArtistTitle;
 
 
-    @AfterInject
-    void afterInject(){
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((LastFmApplication) getApplication()).getAppComponent().inject(this);
         mPresenter.setViewState(this);
     }
 

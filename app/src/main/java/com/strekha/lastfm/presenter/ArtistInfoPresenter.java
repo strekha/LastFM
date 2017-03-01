@@ -12,14 +12,16 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-@EBean
 public class ArtistInfoPresenter{
 
-    @Bean
-    ArtistInfoModel mModel;
+    private ArtistInfoModel mModel;
     private InfoView mView;
     private Subscription mCachedDataSubscription;
     private Subscription mFreshDataSubscription;
+
+    public ArtistInfoPresenter(ArtistInfoModel model) {
+        mModel = model;
+    }
 
     public void requestData(String artist) {
         getViewState().showProgress();

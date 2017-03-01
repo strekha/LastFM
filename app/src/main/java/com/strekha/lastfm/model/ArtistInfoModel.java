@@ -12,11 +12,15 @@ import org.androidannotations.annotations.EBean;
 
 import rx.Observable;
 
-@EBean
 public class ArtistInfoModel {
 
-    @Bean LastFM mLastFM;
-    @Bean DatabaseHelper mDatabase;
+    private LastFM mLastFM;
+    private DatabaseHelper mDatabase;
+
+    public ArtistInfoModel(LastFM lastFM, DatabaseHelper database) {
+        mLastFM = lastFM;
+        mDatabase = database;
+    }
 
     public Observable<Artist> requestFreshData(String artist) {
         return mLastFM.getArtistInfo(artist)

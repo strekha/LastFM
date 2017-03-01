@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.strekha.lastfm.di.AppComponent;
+import com.strekha.lastfm.di.ArtistInfoModule;
 import com.strekha.lastfm.di.DaggerAppComponent;
 import com.strekha.lastfm.di.TopArtistsModule;
 
@@ -26,6 +27,7 @@ public class LastFmApplication extends Application {
     private AppComponent buildComponent() {
         return DaggerAppComponent.builder()
                 .topArtistsModule(new TopArtistsModule())
+                .artistInfoModule(new ArtistInfoModule())
                 .build();
     }
 

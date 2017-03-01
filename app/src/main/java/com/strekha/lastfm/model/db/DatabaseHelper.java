@@ -6,7 +6,6 @@ import org.androidannotations.annotations.EBean;
 
 import io.realm.Realm;
 
-@EBean(scope = EBean.Scope.Singleton)
 public class DatabaseHelper {
 
     public void writeJson(String tag, String json){
